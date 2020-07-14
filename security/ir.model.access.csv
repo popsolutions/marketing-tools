@@ -1,0 +1,21 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+ps_measerements_manager,"Measurements Manager",model_pops_measurement,ps_missions.group_missions_manager,1,1,1,1
+ps_measerements_user,"Measurements user",model_pops_measurement,ps_missions.group_missions_user,1,1,1,0
+ps_measerements_lines_manager,"Measurements Lines Manager",model_pops_measurement_lines,ps_missions.group_missions_manager,1,1,1,1
+ps_measerements_lines_user,"Measurements Lines user",model_pops_measurement_lines,ps_missions.group_missions_user,1,1,1,1
+ps_measerements_quizz_lines_manager,"Measurements Quizz Lines Manager",model_pops_measurement_quizzlines,ps_missions.group_missions_manager,1,1,1,1
+ps_measerements_quizz_lines_user,"Measurements Quizz Lines user",model_pops_measurement_quizzlines,ps_missions.group_missions_user,1,1,1,1
+ps_measerements_photo_lines_manager,"Measurements Photo Lines Manager",model_pops_measurement_photolines,ps_missions.group_missions_manager,1,1,1,1
+ps_measerements_photo_lines_user,"Measurements Photo Lines user",model_pops_measurement_photolines,ps_missions.group_missions_user,1,1,1,1
+ps_missions_manager,"Missions Manager",model_pops_missions,ps_missions.group_missions_manager,1,1,1,1
+ps_missions_user,"Missions user",model_pops_missions,ps_missions.group_missions_user,1,1,1,0
+ps_photo_lines_manager,"Photo Lines Manager",model_pops_photo_lines,ps_missions.group_missions_manager,1,1,1,1
+ps_photo_lines_user,"Photo Lines User",model_pops_photo_lines,ps_missions.group_missions_user,1,1,1,0
+ps_quizz_manager,"Quizz Manager",model_pops_quizz,ps_missions.group_missions_manager,1,1,1,1
+ps_quizz_user,"Quizz User",model_pops_quizz,ps_missions.group_missions_user,1,1,1,0
+ps_quizz_lines_manager,"Quizz Lines Manager",model_pops_quizz_lines,ps_missions.group_missions_manager,1,1,1,1
+ps_quizz_lines_user,"Quizz Lines User",model_pops_quizz_lines,ps_missions.group_missions_user,1,1,1,0
+ps_alternative_manager,"Alternative Manager",model_pops_alternative,ps_missions.group_missions_manager,1,1,1,1
+ps_alternative_user,"Alternative User",model_pops_alternative,ps_missions.group_missions_user,1,1,1,0
+ps_establishment_manager,"Establishment Manager",model_pops_establishment,ps_missions.group_missions_manager,1,1,1,1
+ps_establishment_user,"Establishment User",model_pops_establishment,ps_missions.group_missions_user,1,1,1,0
