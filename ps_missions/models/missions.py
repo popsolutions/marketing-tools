@@ -8,21 +8,26 @@ from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 from geopy.distance import geodesic
 
+MEASUREMENT_PRODUCT = {
+    'quizz': 'ps_missions.product_measurement_quizz',
+    'photo': 'ps_missions.product_measurement_photo',
+    'double': 'ps_missions.product_measurement_quizz_and_photo'
+}
+
 class PopsMeasurement(models.Model):
     _name = 'pops.measurement'
     _description = 'Measurement'
     _order = 'priority desc, sequence, id desc'
     
     name = fields.Char('Name')
-    user_id = fields.Many2one('res.users', 'User', readonly=True,                              
-                              default=lambda self: self.env.uid)    
+    partner_id = fields.Many2one('res.partner', 'Vendor')
     state = fields.Selection([('draft', 'Draft'),
                               ('ordered', 'Ordered'),
                               ('doing', 'Doing'),
                               ('done', 'Done'),
                               ('approved', 'Approved'),
                               ('paid', 'Paid')],
-        default='draft',string='State')
+                             default='draft', string='State', copy=False)
     date_started = fields.Date('Date Started')
     date_finished = fields.Date('Date Finished')
     measurement_latitude = fields.Float('Geo Latitude', digits=(16, 5))
@@ -63,7 +68,6 @@ class PopsMeasurement(models.Model):
     legend_doing = fields.Char(
         'Green Kanban Label', default=lambda s: _('In Progress'), translate=True, required=True,
         help='Override the default value displayed for the normal state for kanban selection, when the task or issue is in that stage.')
-    partner_id = fields.Many2one(related='missions_id.partner_id')
 
     @api.onchange('measurement_latitude', 'measurement_longitude')
     def compute_get_google_map(self):
@@ -102,7 +106,30 @@ class PopsMeasurement(models.Model):
         self.state = 'done'
 
     @api.multi
+    def _create_vendor_invoice(self):
+        product_id = self.env.ref(MEASUREMENT_PRODUCT.get(
+                self.missions_id.type_mission, None))
+        account_id = product_id.product_tmpl_id.get_product_accounts()['expense']
+        inv_line_vals = {
+            'product_id': product_id.id,
+            'name': product_id.description,
+            'price_unit': self.missions_id.reward,
+            'account_id': account_id.id,
+            'invoice_line_tax_ids': [(6, 0, product_id.supplier_taxes_id.ids)],
+        }
+        inv_data = {
+            'type': 'in_invoice',
+            'reference': self.name,
+            'account_id': self.partner_id.property_account_payable_id.id,
+            'partner_id': self.partner_id.id,
+            'origin': self.name,
+            'invoice_line_ids': [(0, 0, inv_line_vals)],
+        }
+        self.sudo().env['account.invoice'].create(inv_data)
+
+    @api.multi
     def action_approve(self):
+        self._create_vendor_invoice()
         self.state = 'approved'
 
     @api.multi

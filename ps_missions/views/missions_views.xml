@@ -15,7 +15,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="user_id"/>
+          <field name="partner_id"/>
           <field name="date_started"/>
           <field name="date_finished"/>
           <field name="measurement_latitude"/>
@@ -41,10 +41,10 @@
           </header>        
         	<sheet>
         		<group>
-        			<grpup>
+        			<group>
 	        			<field name="name"/>
-	          			<field name="user_id"/>
-	          		</grpup>
+	          			<field name="partner_id" domain="[('supplier','=',True)]"/>
+	          		</group>
 	          		<group>
 		          		<field name="date_started"/>
 		          		<field name="date_finished"/>
@@ -122,7 +122,7 @@
 	            <field name="name" string="Measurements"/>
 	            <field name="state"/>
                 <group expand="0" string="Group By">
-                	<filter string="User" name="user_id" domain="[]" context="{'group_by':'user_id'}"/>
+                	<filter string="User" name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
                	</group>	            
 	        </search>	    
 	    </field>
@@ -139,7 +139,7 @@
                <field name="priority"/>
                <field name="state" options='{"group_by_tooltip": {"description": "Stage Description", 
                 "legend_priority": "Use of stars"}}'/>
-               <field name="user_id"/>
+               <field name="partner_id"/>
                <field name="date_started"/>
                <field name="date_finished"/>
                <field name="sequence"/>
@@ -213,8 +213,8 @@
                                </div>
                                <div class="oe_kanban_bottom_right">
                                    <field name="kanban_state" widget="state_selection" groups="base.group_user"/>
-                                   <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" 
-                                    t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" 
+                                   <img t-att-src="kanban_image('res.users', 'image_small', record.partner_id.raw_value)"
+                                    t-att-title="record.partner_id.value" t-att-alt="record.partner_id.value" width="24"
                                     height="24" class="oe_kanban_avatar"/>
                                </div>
                            </div>
@@ -235,7 +235,7 @@
             <form>
                 <group>
                     <field name="name" string = "Measurement Title"/>
-                    <field name="user_id" options="{'no_open': True,'no_create': True}"/>
+                    <field name="partner_id" options="{'no_open': True,'no_create': True}"/>
                 </group>
             </form>
         </field>
@@ -333,7 +333,7 @@
               <group col="2" colspan="6">
                 <field name="subject"/>
               </group>	        	
-              <group col="2">          		
+              <group col="2">
                 <field name="partner_id"/>
                 <field name="establishment_id"/>  
               </group>
