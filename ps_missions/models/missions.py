@@ -16,7 +16,12 @@ class PopsMeasurement(models.Model):
     name = fields.Char('Name')
     user_id = fields.Many2one('res.users', 'User', readonly=True,                              
                               default=lambda self: self.env.uid)    
-    state = fields.Selection([('draft','Draft'),('ordered','Ordered'),('doing','Doing'),('done','Done')],
+    state = fields.Selection([('draft', 'Draft'),
+                              ('ordered', 'Ordered'),
+                              ('doing', 'Doing'),
+                              ('done', 'Done'),
+                              ('approved', 'Approved'),
+                              ('paid', 'Paid')],
         default='draft',string='State')
     date_started = fields.Date('Date Started')
     date_finished = fields.Date('Date Finished')
@@ -58,9 +63,7 @@ class PopsMeasurement(models.Model):
     legend_doing = fields.Char(
         'Green Kanban Label', default=lambda s: _('In Progress'), translate=True, required=True,
         help='Override the default value displayed for the normal state for kanban selection, when the task or issue is in that stage.')
-    partner_id = fields.Many2one(related='missions_id.partner_id')   
-    approved = fields.Boolean(default=False)
-    paid = fields.Boolean(default=False)
+    partner_id = fields.Many2one(related='missions_id.partner_id')
 
     @api.onchange('measurement_latitude', 'measurement_longitude')
     def compute_get_google_map(self):
@@ -84,8 +87,33 @@ class PopsMeasurement(models.Model):
             elif task.kanban_state == 'doing':
                 task.kanban_state_label = task.legend_blocked                
             else:
-                task.kanban_state_label = task.legend_done    
-        
+                task.kanban_state_label = task.legend_done
+
+    @api.multi
+    def action_confirm(self):
+        self.state = 'ordered'
+
+    @api.multi
+    def action_doing(self):
+        self.state = 'doing'
+
+    @api.multi
+    def action_done(self):
+        self.state = 'done'
+
+    @api.multi
+    def action_approve(self):
+        self.state = 'approved'
+
+    @api.multi
+    def action_mark_as_paid(self):
+        self.state = 'paid'
+
+    @api.multi
+    def action_draft(self):
+        self.state = 'draft'
+
+
 class PopsMeasurementLine(models.Model):
     _name = 'pops.measurement.lines'
     _description = 'Measurement Lines' 

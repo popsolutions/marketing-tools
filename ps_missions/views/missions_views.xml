@@ -31,9 +31,15 @@
       <field name="arch" type="xml">
         <form>
         	<header>
-				    <field name="state" widget="statusbar" statusbar_visible="draft,ordered,doing,done" clickable="True"/>
+                <button name="action_confirm" type="object" string="Confirm" states="draft" class="oe_highlight"/>
+                <button name="action_doing" type="object" string="Process" states="ordered" class="oe_highlight"/>
+                <button name="action_done" type="object" string="Done" states="doing" class="oe_highlight"/>
+                <button name="action_approve" type="object" string="Approve" states="done" class="oe_highlight"/>
+                <button name="action_mark_as_paid" type="object" string="Mark as Paid" states="approved" class="oe_highlight"/>
+                <button name="action_draft" type="object" string="Back to Draft" states="ordered"/>
+                <field name="state" widget="statusbar"/>
           </header>        
-        	<sheet>        		
+        	<sheet>
         		<group>
         			<grpup>
 	        			<field name="name"/>
@@ -102,11 +108,7 @@
                     </tree>
 	      				  </field>
                 </page>
-	          	</notebook>   
-              <group>
-                <field name="approved" attrs="{'invisible': [('state', 'not in', ('done'))]}"/>
-                <field name="paid" attrs="{'invisible': [('approved', '==', (False))]}"/>
-              </group>	         		          	
+	          	</notebook>
           	</sheet>          
         </form>
       </field>
