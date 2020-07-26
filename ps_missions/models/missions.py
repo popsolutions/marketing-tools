@@ -134,7 +134,8 @@ class PopsMeasurement(models.Model):
 
     @api.multi
     def action_mark_as_paid(self):
-        self.state = 'paid'
+        for rec in self:
+            rec.state = 'paid'
 
     @api.multi
     def action_draft(self):
