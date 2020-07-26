@@ -19,7 +19,7 @@ class PopsMeasurement(models.Model):
     _description = 'Measurement'
     _order = 'priority desc, sequence, id desc'
     
-    name = fields.Char('Name')
+    name = fields.Char('Name', default=lambda self: _('New'), copy=False)
     partner_id = fields.Many2one('res.partner', 'Vendor')
     state = fields.Selection([('draft', 'Draft'),
                               ('ordered', 'Ordered'),
@@ -95,7 +95,9 @@ class PopsMeasurement(models.Model):
 
     @api.multi
     def action_confirm(self):
-        self.state = 'ordered'
+        for rec in self:
+            rec.set_name_sequence()
+            rec.state = 'ordered'
 
     @api.multi
     def action_doing(self):
@@ -140,6 +142,11 @@ class PopsMeasurement(models.Model):
     @api.multi
     def action_draft(self):
         self.state = 'draft'
+
+    @api.model
+    def set_name_sequence(self):
+        if self.name == _('New') and self.state == 'draft':
+            self.name = self.env['ir.sequence'].next_by_code('mission.measurement') or _('New')
 
 
 class PopsMeasurementLine(models.Model):
