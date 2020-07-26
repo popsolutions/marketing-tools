@@ -20,13 +20,15 @@
     'version': '0.4',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'purchase'],
 
     # always loaded
     'data': [
         'security/missions_security.xml',        
         'security/ir.model.access.csv',
         'views/missions_views.xml',
+        'data/products.xml',
+        'data/ir_sequence_data.xml',
     ],
     'installable': True,
     'application': True,

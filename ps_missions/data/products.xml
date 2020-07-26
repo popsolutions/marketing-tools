@@ -1,0 +1,36 @@
+<odoo>
+    <data noupdate="1">
+        <record id="product_measurement_quizz" model="product.product">
+            <field name="name">Measurement - Quizz Only</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">1</field>
+            <field name="sale_ok">0</field>
+            <field name="default_code">MQUIZZ</field>
+            <field name="description">This product is used in Missions module to invoice the Measurement related to Quizz Only mission type</field>
+        </record>
+
+        <record id="product_measurement_photo" model="product.product">
+            <field name="name">Measurement - Photo Only</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">1</field>
+            <field name="sale_ok">0</field>
+            <field name="default_code">MPHOTO</field>
+            <field name="description">This product is used in Missions module to invoice the Measurement related to Photo Only mission type</field>
+        </record>
+
+        <record id="product_measurement_quizz_and_photo" model="product.product">
+            <field name="name">Measurement - Quizz and Photo</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">1</field>
+            <field name="sale_ok">0</field>
+            <field name="default_code">MQUIZZ_PHOTO</field>
+            <field name="description">This product is used in Missions module to invoice the Measurement related to Quizz and Photo mission type</field>
+        </record>
+    </data>
+</odoo>
