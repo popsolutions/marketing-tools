@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for Mission Measurements -->
+        <record id="seq_mission_measurement" model="ir.sequence">
+            <field name="name">Mission Measurement</field>
+            <field name="code">mission.measurement</field>
+            <field name="prefix">MEAS</field>
+            <field name="padding">1</field>
+        </record>
+
+    </data>
+</odoo>
