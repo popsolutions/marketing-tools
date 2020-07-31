@@ -7,7 +7,7 @@
             <field name="type">service</field>
             <field name="purchase_ok">1</field>
             <field name="sale_ok">0</field>
-            <field name="default_code">MQUIZZ</field>
+            <field name="default_code">MEAQUIZZ</field>
             <field name="description">This product is used in Missions module to invoice the Measurement related to Quizz Only mission type</field>
         </record>
 
@@ -18,7 +18,7 @@
             <field name="type">service</field>
             <field name="purchase_ok">1</field>
             <field name="sale_ok">0</field>
-            <field name="default_code">MPHOTO</field>
+            <field name="default_code">MEAPHOTO</field>
             <field name="description">This product is used in Missions module to invoice the Measurement related to Photo Only mission type</field>
         </record>
 
@@ -29,8 +29,44 @@
             <field name="type">service</field>
             <field name="purchase_ok">1</field>
             <field name="sale_ok">0</field>
-            <field name="default_code">MQUIZZ_PHOTO</field>
+            <field name="default_code">MEAQUIZZ_PHOTO</field>
             <field name="description">This product is used in Missions module to invoice the Measurement related to Quizz and Photo mission type</field>
+        </record>
+
+        <record id="product_mission_quizz" model="product.template">
+            <field name="name">Mission - Quizz Only</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">0</field>
+            <field name="sale_ok">1</field>
+            <field name="default_code">MISQUIZZ</field>
+            <field name="description">This product is used in Missions module to invoice the Mission related to Quizz Only mission type</field>
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record id="product_mission_photo" model="product.product">
+            <field name="name">Mission - Photo Only</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">0</field>
+            <field name="sale_ok">1</field>
+            <field name="default_code">MISPHOTO</field>
+            <field name="description">This product is used in Missions module to invoice the Mission related to Photo Only mission type</field>
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record id="product_mission_quizz_and_photo" model="product.product">
+            <field name="name">Mission - Quizz and Photo</field>
+            <field name="standard_price">0.00</field>
+            <field name="list_price">0.00</field>
+            <field name="type">service</field>
+            <field name="purchase_ok">0</field>
+            <field name="sale_ok">1</field>
+            <field name="default_code">MISQUIZZ_PHOTO</field>
+            <field name="description">This product is used in Missions module to invoice the Mission related to Quizz and Photo mission type</field>
+            <field name="sale_line_warn">no-message</field>
         </record>
     </data>
 </odoo>
