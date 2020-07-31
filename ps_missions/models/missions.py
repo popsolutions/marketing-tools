@@ -12,7 +12,6 @@ class PopsMissions(models.Model):
         measurement = self.env['pops.measurement']
         for missions in self:
             missions.measurement_count = measurement.search_count([('missions_id', '=', missions.id)])
-            print('_compute_measurement_count ', missions.measurement_count)
 
     # @api.multi
     # def _compute_rewarded_count(self):
@@ -34,7 +33,7 @@ class PopsMissions(models.Model):
     #             ('paid', '=', True)])
 
     name = fields.Char('Mission Title', required=True)
-    state = fields.Selection([('draft', 'Draft'), ('open', 'Open'), ('reopen', 'Re-Open'), ('close', 'Close')],
+    state = fields.Selection([('draft', 'Draft'), ('open', 'Open'), ('closed', 'Closed')],
                              default='draft', string='State')
     create_by_user_id = fields.Many2one('res.users', 'User', default=lambda self: self.env.uid)
     partner_id = fields.Many2one('res.partner', 'Partner')
@@ -68,13 +67,28 @@ class PopsMissions(models.Model):
     #     # print(geodesic(origin, dist).meters)  # 23576.805481751613
     #     # print(geodesic(origin, dist).miles)  # 14.64994773134371
     #     return geodesic(origin, dist).kilometers)  # 23.576805481751613
-        
+
+    @api.multi
+    def action_open(self):
+        """Open the mission (confirm)"""
+        self.state = 'open'
+
+    @api.multi
+    def action_close(self):
+        """Close the mission"""
+        self.state = 'closed'
+
+    @api.multi
+    def action_draft(self):
+        """Get Back mission to Draft"""
+        self.state = 'draft'
+
 
 class PopsPhotoLine(models.Model):
     _name = 'pops.photo.lines'
     _description = 'Photo Lines' 
     
-    name = fields.Char(string='Descrição')
+    name = fields.Char(string='Description')
     mission_id = fields.Many2one('pops.missions', 'Mission', ondelete='cascade', required=True)
 
 
