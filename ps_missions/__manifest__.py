@@ -24,10 +24,11 @@
 
     # always loaded
     'data': [
-        'security/missions_security.xml',        
+        'security/missions_security.xml',
         'security/ir.model.access.csv',
-        'views/missions_views.xml',
         'views/measurements_views.xml',
+        'views/missions_views.xml',
+        'views/menu_views.xml',
         'data/products.xml',
         'data/ir_sequence_data.xml',
     ],

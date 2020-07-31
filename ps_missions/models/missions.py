@@ -2,6 +2,12 @@
 
 from odoo import api, fields, models, tools, SUPERUSER_ID, _
 
+MISSION_PRODUCT = {
+    'quizz': 'ps_missions.product_mission_quizz',
+    'photo': 'ps_missions.product_mission_photo',
+    'double': 'ps_missions.product_mission_quizz_and_photo'
+}
+
 
 class PopsMissions(models.Model):
     _name = 'pops.missions'
@@ -69,8 +75,36 @@ class PopsMissions(models.Model):
     #     return geodesic(origin, dist).kilometers)  # 23.576805481751613
 
     @api.multi
+    def _check_existing_invoice(self):
+        """Check if invoice already exists, in case Re-Open missions"""
+        return self.env['account.invoice'].search([('origin', '=', self.name)])
+
+    @api.multi
+    def _create_customer_invoice(self):
+        product_id = self.env.ref(MISSION_PRODUCT.get(
+            self.type_mission, None))
+        account_id = product_id.product_tmpl_id.get_product_accounts()['income']
+        inv_line_vals = {
+            'product_id': product_id.id,
+            'name': product_id.description,
+            'price_unit': product_id.lst_price,
+            'account_id': account_id.id,
+            'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
+        }
+        inv_data = {
+            'type': 'out_invoice',
+            'account_id': self.partner_id.property_account_receivable_id.id,
+            'partner_id': self.partner_id.id,
+            'origin': self.name,
+            'invoice_line_ids': [(0, 0, inv_line_vals)],
+        }
+        self.sudo().env['account.invoice'].create(inv_data)
+
+    @api.multi
     def action_open(self):
         """Open the mission (confirm)"""
+        if not self._check_existing_invoice():
+            self._create_customer_invoice()
         self.state = 'open'
 
     @api.multi

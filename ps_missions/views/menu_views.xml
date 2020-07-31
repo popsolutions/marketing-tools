@@ -1,0 +1,28 @@
+<odoo>
+
+ <!-- Top menu item -->
+    <menuitem id='menu_missions' name='Missions' sequence="105" groups="group_missions_user" web_icon="ps_missions,static/description/icon.png"/>
+    <menuitem name="Operations" parent="menu_missions" id="menu_missions_operations" sequence="50" />
+    <menuitem name="Manager" parent="menu_missions" id="menu_missions_admin" sequence="51" groups="group_missions_manager"/>
+    <menuitem name="Configuration" parent="menu_missions" id="menu_missions_config" sequence="53" groups="group_missions_manager"/>
+
+   <menuitem action="action_missions_tree" id="menu_misions_missions" parent="menu_missions_operations" name="Missions"
+    sequence="6"/>
+
+   <menuitem action="action_view_measuments" id="menu_misions_measurement" parent="menu_missions_operations"
+    name="Measurements" sequence="16"/>
+
+   <menuitem id="menu_missions_customer" name="Customers"
+       parent="menu_missions_operations"
+       action="base.action_partner_customer_form" sequence="110"/>
+
+    <menuitem action="action_view_quizz" id="menu_misions_quizz" parent="menu_missions_operations" name="Quizz"
+    sequence="7"/>
+
+    <menuitem action="action_view_alternative" id="menu_misions_alternative" parent="menu_missions_operations" name="Alternatives"
+    sequence="8"/>
+
+    <menuitem action="action_view_establishment" id="menu_misions_establishment" parent="menu_missions_operations" name="Establishments"
+    sequence="9"/>
+
+</odoo>

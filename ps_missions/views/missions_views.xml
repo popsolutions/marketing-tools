@@ -1,13 +1,5 @@
 <odoo>
   <data>
-  
-    <!-- Top menu item -->
-    <menuitem id='menu_missions' name='Missions' sequence="105" groups="group_missions_user" web_icon="ps_missions,static/description/icon.png"/>
-    <menuitem name="Operations" parent="menu_missions" id="menu_missions_operations" sequence="50" />
-    <menuitem name="Manager" parent="menu_missions" id="menu_missions_admin" sequence="51" groups="group_missions_manager"/>
-    <menuitem name="Configuration" parent="menu_missions" id="menu_missions_config" sequence="53" groups="group_missions_manager"/>
-      
-
    
 	<!-- missions models -->
 	
@@ -41,7 +33,7 @@
           </header>        
         	<sheet>    
             <div class="oe_button_box" name="button_box">
-              <button class="oe_stat_button" type="action" name="%(action_open_missions_measurement)d"
+              <button class="oe_stat_button" type="action" name="%(ps_missions.action_open_missions_measurement)d"
                   groups="ps_missions.group_missions_user"
                   icon="fa-book" title="Measurement count">
                   <field string="Measurement" name="measurement_count" widget="statinfo"/>
@@ -148,8 +140,7 @@
         
    </record>
 
-   <menuitem action="action_missions_tree" id="menu_misions_missions" parent="menu_missions_operations" name="Missions" 
-    sequence="6"/>
+
    
    <record id="action_open_partner_missions" model="ir.actions.act_window">
        <field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
@@ -173,10 +164,6 @@
            </button>
        </field>
    </record>   
-   
-   <menuitem id="menu_missions_customer" name="Customers"
-       parent="menu_missions_operations"
-       action="base.action_partner_customer_form" sequence="110"/>            	       
 
     <!-- actions opening views on models -->
     <!--
@@ -275,9 +262,6 @@
        </field>
     </record>
 
-    <menuitem action="action_view_quizz" id="menu_misions_quizz" parent="menu_missions_operations" name="Quizz" 
-    sequence="7"/>
-
     <!-- alternative -->
     <record id="pops_alternative_form" model="ir.ui.view" >
       <field name="name">pops.alternative.form</field>
@@ -317,9 +301,6 @@
          </p>
        </field>
     </record>
-
-    <menuitem action="action_view_alternative" id="menu_misions_alternative" parent="menu_missions_operations" name="Alternatives" 
-    sequence="8"/>
 
     <!-- establishment -->
 
@@ -369,9 +350,5 @@
          </p>
        </field>
     </record>
-
-    <menuitem action="action_view_establishment" id="menu_misions_establishment" parent="menu_missions_operations" name="Establishments" 
-    sequence="9"/>
-
   </data>
 </odoo>

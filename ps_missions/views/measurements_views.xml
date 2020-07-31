@@ -278,9 +278,6 @@
        <field name="act_window_id" ref="action_view_measuments"/>
    </record>
 
-   <menuitem action="action_view_measuments" id="menu_misions_measurement" parent="menu_missions_operations"
-    name="Measurements" sequence="16"/>
-
    <record id="action_open_missions_measurement" model="ir.actions.act_window">
        <field name="context">{'search_default_missions_id': [active_id], 'default_missions_id': active_id}</field>
        <field name="name">measurement</field>
