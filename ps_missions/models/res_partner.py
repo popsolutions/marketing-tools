@@ -13,3 +13,4 @@ class ResPartner(models.Model):
 
     missions_count = fields.Integer(compute='_compute_missions_count', string='Missions Count', type='integer',
                                     groups='ps_missions.group_missions_user')
+    is_oper = fields.Boolean('Is a Mission Oper', help="Check if is a Mission Operator")
