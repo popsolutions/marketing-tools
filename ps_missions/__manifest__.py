@@ -28,6 +28,7 @@
         'security/ir.model.access.csv',
         'views/measurements_views.xml',
         'views/missions_views.xml',
+        'views/res_partner_view.xml',
         'views/menu_views.xml',
         'data/products.xml',
         'data/ir_sequence_data.xml',
