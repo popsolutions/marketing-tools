@@ -40,7 +40,7 @@
         <field name="model">pops.product.brand</field>
         <field name="arch" type="xml">
             <search>
-                <!-- TODO -->
+                <field name="name"/>
             </search>
         </field>
     </record>
@@ -56,7 +56,7 @@
         </field>
     </record>
 
-        <record id="view_pops_product_brand_kanban" model="ir.ui.view">
+    <record id="view_pops_product_brand_kanban" model="ir.ui.view">
         <field name="name">Mission Products Brand Kanban</field>
         <field name="model">pops.product.brand</field>
         <field name="type">kanban</field>
@@ -83,9 +83,8 @@
         </field>
     </record>
 
-
     <record model="ir.actions.act_window" id="pops_product_brand_act_window">
-        <field name="name">Mission Product Brands</field> <!-- TODO -->
+        <field name="name">Mission Product Brands</field>
         <field name="res_model">pops.product.brand</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[]</field>
@@ -94,9 +93,9 @@
 
     <record model="ir.ui.menu" id="pops_product_brand_menu">
         <field name="name">Mission Product Brands</field>
-        <field name="parent_id" ref="ps_missions.menu_missions_config"/> <!-- TODO -->
+        <field name="parent_id" ref="ps_missions.menu_missions_config"/>
         <field name="action" ref="pops_product_brand_act_window"/>
-        <field name="sequence" eval="16"/> <!-- TODO -->
+        <field name="sequence" eval="16"/>
     </record>
 
 </odoo>

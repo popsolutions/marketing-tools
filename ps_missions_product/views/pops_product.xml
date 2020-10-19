@@ -27,6 +27,23 @@
                         <field name="brand_id"/>
                     </group>
 
+                    <notebook>
+                        <page string="Competitors" name="competitors_information">
+
+                            <field name="competitor_product_ids">
+                                <tree string="Competitors Products" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="brand_id"/>
+                                    <field name="category_id"/>
+                                    <field name="barcode"/>
+                                    <field name="default_code"/>
+                                </tree>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
                 </sheet>
                 <div class="oe_chatter"></div>
             </form>
@@ -118,7 +135,7 @@
         <field name="name">Mission Products</field>
         <field name="parent_id" ref="ps_missions.menu_missions_config"/>
         <field name="action" ref="pops_product_act_window"/>
-        <field name="sequence" eval="16"/> <!-- TODO -->
+        <field name="sequence" eval="16"/>
     </record>
 
 </odoo>

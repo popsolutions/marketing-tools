@@ -7,27 +7,18 @@ from odoo import api, fields, models, tools, _
 class PopsProductCategory(models.Model):
 
     _name = 'pops.product.category'
-    _description = 'Pops Product Category'  # TODO
+    _description = 'Pops Product Category'
 
     name = fields.Char()
-
     pops_product_ids = fields.One2many(
         'pops.product',
         'category_id',
         string="Mission Products"
     )
-
     pops_product_count = fields.Integer(
         compute='_compute_pops_product_count',
         string='# Mission Products'
     )
-
-    @api.depends('pops_product_ids')
-    def _compute_pops_product_count(self):
-        for rec in self:
-            rec.pops_product_count = len(
-                rec.pops_product_ids)
-
 
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary(
@@ -56,6 +47,12 @@ class PopsProductCategory(models.Model):
         tools.image_resize_images(vals)
         res = super(PopsProductCategory, self).write(vals)
         return res
+
+    @api.depends('pops_product_ids')
+    def _compute_pops_product_count(self):
+        for rec in self:
+            rec.pops_product_count = len(
+                rec.pops_product_ids)
 
     @api.multi
     def action_view_pops_product(self):

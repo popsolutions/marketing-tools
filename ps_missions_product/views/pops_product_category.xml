@@ -40,7 +40,7 @@
         <field name="model">pops.product.category</field>
         <field name="arch" type="xml">
             <search>
-                <!-- TODO -->
+                <field name="name"/>
             </search>
         </field>
     </record>
@@ -56,10 +56,37 @@
         </field>
     </record>
 
+    <record id="view_pops_product_category_kanban" model="ir.ui.view">
+        <field name="name">Mission Products Category Kanban</field>
+        <field name="model">pops.product.category</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="image_small"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('pops.product.category', 'image_small', record.id.raw_value)" alt="Category"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div name="tags"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record model="ir.actions.act_window" id="pops_product_category_act_window">
         <field name="name">Mission Product Categories</field>
         <field name="res_model">pops.product.category</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
@@ -68,7 +95,7 @@
         <field name="name">Mission Product Categories</field>
         <field name="parent_id" ref="ps_missions.menu_missions_config"/>
         <field name="action" ref="pops_product_category_act_window"/>
-        <field name="sequence" eval="16"/> <!-- TODO -->
+        <field name="sequence" eval="16"/>
     </record>
 
 </odoo>
