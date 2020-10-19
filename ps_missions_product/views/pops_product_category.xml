@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 - TODAY, Marcel Savegnago <marcel.savegnago@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="pops_product_category_form_view">
+        <field name="name">pops.product.category.form (in ps_missions_product)</field>
+        <field name="model">pops.product.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_view_pops_product" icon="fa-th-list"
+                                context="{'category_id': id}">
+                            <div class="o_stat_info">
+                                <field name="pops_product_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> Mission Products</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Category Name"/>
+                        <h1><field name="name" placeholder="Category Name"/></h1>
+                    </div>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="pops_product_category_search_view">
+        <field name="name">pops.product.category.search (in ps_missions_product)</field>
+        <field name="model">pops.product.category</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- TODO -->
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="pops_product_category_tree_view">
+        <field name="name">pops.product.category.tree (in ps_missions_product)</field>
+        <field name="model">pops.product.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="pops_product_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pops_product_category_act_window">
+        <field name="name">Mission Product Categories</field>
+        <field name="res_model">pops.product.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="pops_product_category_menu">
+        <field name="name">Mission Product Categories</field>
+        <field name="parent_id" ref="ps_missions.menu_missions_config"/>
+        <field name="action" ref="pops_product_category_act_window"/>
+        <field name="sequence" eval="16"/> <!-- TODO -->
+    </record>
+
+</odoo>
