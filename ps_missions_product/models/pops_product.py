@@ -18,6 +18,9 @@ class PopsProduct(models.Model):
     brand_id = fields.Many2one(
         'pops.product.brand', 'Product Brand',
         help="Select brand for the current product")
+    packaging_type_id = fields.Many2one(
+        'pops.product.packaging.type', 'Product Packaging Type',
+        help="Select packaging type for the current product")
     barcode = fields.Char(
         'Barcode', copy=False, oldname='ean13',
         help="International Article Number used for product identification.")

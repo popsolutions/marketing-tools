@@ -25,6 +25,7 @@
                         <field name="default_code"/>
                         <field name="category_id"/>
                         <field name="brand_id"/>
+                        <field name="packaging_type_id"/>
                     </group>
 
                     <notebook>
@@ -35,6 +36,7 @@
                                     <field name="name"/>
                                     <field name="brand_id"/>
                                     <field name="category_id"/>
+                                    <field name="packaging_type_id"/>
                                     <field name="barcode"/>
                                     <field name="default_code"/>
                                 </tree>
@@ -58,6 +60,7 @@
                 <field name="name"/>
                 <field name="brand_id"/>
                 <field name="category_id"/>
+                <field name="packaging_type_id"/>
                 <field name="barcode"/>
                 <field name="default_code"/>
             </search>
@@ -70,10 +73,11 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="default_code"/>
-                <field name="barcode"/>
-                <field name="category_id"/>
                 <field name="brand_id"/>
+                <field name="category_id"/>
+                <field name="packaging_type_id"/>
+                <field name="barcode"/>
+                <field name="default_code"/>
             </tree>
         </field>
     </record>
@@ -106,15 +110,25 @@
                             <div class="oe_kanban_details">
                                 <strong class="o_kanban_record_title">
                                     <field name="name"/>
-                                    <small t-if="record.default_code.value">[<field name="default_code"/>]</small>
+                                    <small t-if="record.brand_id.value">[<field name="brand_id"/>]</small>
                                 </strong>
                                 <ul>
-                                    <li><strong>Barcode: <field name="barcode"></field></strong></li>
+                                    <li>Barcode: <field name="barcode"></field></li>
                                 </ul>
                                 <ul>
-                                    <li><strong>Brand: <field name="brand_id"></field></strong></li>
+                                    <li>Category: <field name="category_id"></field></li>
+                                </ul>
+                                <ul>
+                                    <li>Packaging Type: <field name="packaging_type_id"></field></li>
                                 </ul>
                                 <div name="tags"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="oe_kanban_bottom_right">
+                                        <img t-att-src="kanban_image('pops.product.brand', 'image_small', record.brand_id.raw_value)" t-att-title="record.brand_id.value" t-att-alt="record.brand_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </t>
@@ -135,7 +149,7 @@
         <field name="name">Mission Products</field>
         <field name="parent_id" ref="ps_missions.menu_missions_config"/>
         <field name="action" ref="pops_product_act_window"/>
-        <field name="sequence" eval="16"/>
+        <field name="sequence" eval="99"/>
     </record>
 
 </odoo>

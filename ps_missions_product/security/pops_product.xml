@@ -4,8 +4,8 @@
 
 <odoo>
 
-    <record model="ir.model.access" id="pops_product_access_name"> <!-- TODO acl id -->
-        <field name="name">pops.product access name</field> <!-- TODO acl name -->
+    <record model="ir.model.access" id="pops_product_access_name">
+        <field name="name">pops.product access name</field>
         <field name="model_id" ref="model_pops_product"/>
         <!-- TODO review and adapt -->
         <field name="group_id" ref="base.group_user"/>
