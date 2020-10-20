@@ -11,6 +11,9 @@ class PopsProduct(models.Model):
     _description = 'Pops Product'  # TODO
 
     name = fields.Char()
+    active = fields.Boolean('Active', default=True,
+                            help="If unchecked, it will allow you to hide"
+                                 " the product without removing it.")
     default_code = fields.Char('Internal Reference', index=True)
     category_id = fields.Many2one(
         'pops.product.category', 'Product Category',
@@ -31,12 +34,14 @@ class PopsProduct(models.Model):
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary(
         "Image", attachment=True,
-        help="This field holds the image used as image for the product, limited to 1024x1024px.")
+        help="This field holds the image used as image for the product, limited "
+             "to 1024x1024px.")
     image_medium = fields.Binary(
         "Medium-sized image", attachment=True,
         help="Medium-sized image of the product. It is automatically "
              "resized as a 128x128px image, with aspect ratio preserved, "
-             "only when the image exceeds one of those sizes. Use this field in form views or some kanban views.")
+             "only when the image exceeds one of those sizes. Use this field in "
+             "form views or some kanban views.")
     image_small = fields.Binary(
         "Small-sized image", attachment=True,
         help="Small-sized image of the product. It is automatically "
@@ -60,5 +65,6 @@ class PopsProduct(models.Model):
     def _check_dependency_recursion(self):
         if not self._check_m2m_recursion('competitor_product_ids'):
             raise ValidationError(
-                _('You cannot create recursive competitor product between mission product.')
+                _('You cannot create recursive competitor product between '
+                  'mission product.')
             )
