@@ -145,11 +145,18 @@
         <field name="context">{}</field>
     </record>
 
+    <record model="ir.ui.menu" id="pops_product_main_menu">
+        <field name="name">Mission Products</field>
+        <field name="parent_id" ref="ps_missions.menu_missions"/>
+        <field name="action" ref="pops_product_act_window"/>
+        <field name="sequence" eval="52"/>
+    </record>
+
     <record model="ir.ui.menu" id="pops_product_menu">
         <field name="name">Mission Products</field>
-        <field name="parent_id" ref="ps_missions.menu_missions_config"/>
+        <field name="parent_id" ref="pops_product_main_menu"/>
         <field name="action" ref="pops_product_act_window"/>
-        <field name="sequence" eval="99"/>
+        <field name="sequence" eval="10"/>
     </record>
 
 </odoo>
