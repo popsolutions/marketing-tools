@@ -16,20 +16,20 @@ class PopsProduct(models.Model):
                                  " the product without removing it.")
     default_code = fields.Char('Internal Reference', index=True)
     category_id = fields.Many2one(
-        'pops.product.category', 'Product Category',
+        'pops.product.category', 'Category',
         help="Select category for the current product")
     brand_id = fields.Many2one(
-        'pops.product.brand', 'Product Brand',
+        'pops.product.brand', 'Brand',
         help="Select brand for the current product")
     packaging_type_id = fields.Many2one(
-        'pops.product.packaging.type', 'Product Packaging Type',
+        'pops.product.packaging.type', 'Packaging Type',
         help="Select packaging type for the current product")
     barcode = fields.Char(
         'Barcode', copy=False, oldname='ean13',
         help="International Article Number used for product identification.")
     competitor_product_ids = fields.Many2many(
         'pops.product', 'pops_product_competitor_rel', 'src_id', 'dest_id',
-        string='Optional Products', help="Competitor Products")
+        string='Competitor Products', help="Competitor Products")
 
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary(

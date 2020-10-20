@@ -28,6 +28,4 @@
         'security/pops_product_category.xml',
         'security/pops_product_brand.xml',
     ],
-    'demo': [
-    ],
 }

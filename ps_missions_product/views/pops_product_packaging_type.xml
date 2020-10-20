@@ -30,7 +30,6 @@
                         <h1><field name="name" placeholder="Packaging Type Name"/></h1>
                     </div>
                 </sheet>
-<!--                <div class="oe_chatter"></div>-->
             </form>
         </field>
     </record>
