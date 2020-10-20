@@ -23,6 +23,7 @@
                             </div>
                         </button>
                     </div>
+
                     <field name="image_medium" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <label class="oe_edit_only" for="name" string="Brand Name"/>
@@ -30,7 +31,7 @@
                     </div>
 
                 </sheet>
-                <div class="oe_chatter"></div>
+<!--                <div class="oe_chatter"></div>-->
             </form>
         </field>
     </record>
