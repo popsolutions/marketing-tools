@@ -19,14 +19,14 @@
         'ps_missions',
     ],
     'data': [
-        'security/pops_product_packaging_type.xml',
+        'views/pops_product.xml',
         'views/pops_product_packaging_type.xml',
-        'security/pops_product_category.xml',
         'views/pops_product_category.xml',
-        'security/pops_product_brand.xml',
         'views/pops_product_brand.xml',
         'security/pops_product.xml',
-        'views/pops_product.xml',
+        'security/pops_product_packaging_type.xml',
+        'security/pops_product_category.xml',
+        'security/pops_product_brand.xml',
     ],
     'demo': [
     ],

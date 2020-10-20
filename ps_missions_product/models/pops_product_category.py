@@ -23,12 +23,14 @@ class PopsProductCategory(models.Model):
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary(
         "Image", attachment=True,
-        help="This field holds the image used as image for the product, limited to 1024x1024px.")
+        help="This field holds the image used as image for the product, "
+             "limited to 1024x1024px.")
     image_medium = fields.Binary(
         "Medium-sized image", attachment=True,
         help="Medium-sized image of the product. It is automatically "
              "resized as a 128x128px image, with aspect ratio preserved, "
-             "only when the image exceeds one of those sizes. Use this field in form views or some kanban views.")
+             "only when the image exceeds one of those sizes. Use this field in "
+             "form views or some kanban views.")
     image_small = fields.Binary(
         "Small-sized image", attachment=True,
         help="Small-sized image of the product. It is automatically "
@@ -60,6 +62,8 @@ class PopsProductCategory(models.Model):
         if self.pops_product_count > 1:
             action["domain"] = [("id", "in", self.pops_product_ids.ids)]
         else:
-            action["views"] = [(self.env.ref("ps_missions_product.pops_product_form_view").id, "form")]
-            action["res_id"] = self.pops_product_ids and self.pops_product_ids.ids[0] or False
+            action["views"] = [(
+                self.env.ref("ps_missions_product.pops_product_form_view").id, "form")]
+            action["res_id"] = self.pops_product_ids and \
+                               self.pops_product_ids.ids[0] or False
         return action
