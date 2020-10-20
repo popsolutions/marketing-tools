@@ -14,7 +14,7 @@ class PopsProduct(models.Model):
     active = fields.Boolean('Active', default=True,
                             help="If unchecked, it will allow you to hide"
                                  " the product without removing it.")
-    default_code = fields.Char('Internal Reference', index=True)
+    default_code = fields.Char('Internal Reference', copy=False, index=True)
     category_id = fields.Many2one(
         'pops.product.category', 'Category',
         help="Select category for the current product")
@@ -25,7 +25,7 @@ class PopsProduct(models.Model):
         'pops.product.packaging.type', 'Packaging Type',
         help="Select packaging type for the current product")
     barcode = fields.Char(
-        'Barcode', copy=False, oldname='ean13',
+        'Barcode', copy=False,
         help="International Article Number used for product identification.")
     competitor_product_ids = fields.Many2many(
         'pops.product', 'pops_product_competitor_rel', 'src_id', 'dest_id',
