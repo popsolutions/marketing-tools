@@ -19,3 +19,5 @@ ps_alternative_manager,"Alternative Manager",model_pops_alternative,ps_missions.
 ps_alternative_user,"Alternative User",model_pops_alternative,ps_missions.group_missions_user,1,1,1,0
 ps_establishment_manager,"Establishment Manager",model_pops_establishment,ps_missions.group_missions_manager,1,1,1,1
 ps_establishment_user,"Establishment User",model_pops_establishment,ps_missions.group_missions_user,1,1,1,0
+ps_establishment_type_manager,"Establishment Type Manager",model_pops_establishment_type,ps_missions.group_missions_manager,1,1,1,1
+ps_establishment_type_user,"Establishment Type User",model_pops_establishment_type,ps_missions.group_missions_user,1,1,1,0
