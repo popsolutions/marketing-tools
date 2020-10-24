@@ -37,6 +37,8 @@ class PopsMeasurement(models.Model):
                                       readonly=True, copy=True)
     photo_lines_ids = fields.One2many('pops.measurement.photolines', 'measurement_id', 'Measurement Photo Lines',
                                       readonly=True, copy=True)
+    price_comparison_lines_ids = fields.One2many('pops.measurement.price_comparison.lines', 'measurement_id',
+                                                 'Measurement Photo Lines', readonly=False, copy=True)
     missions_id = fields.Many2one('pops.missions', 'Missions', ondelete='cascade', required=True)
     color = fields.Integer(string='Color Index')
     priority = fields.Selection([
@@ -184,3 +186,17 @@ class PopsMeasurementPhotoLine(models.Model):
     photo = fields.Binary('Photo')
     photo_id = fields.Many2one('pops.photo.lines', 'Photo Line', ondelete='cascade', required=True)
     measurement_id = fields.Many2one('pops.measurement', 'Measurement', ondelete='cascade', required=True)
+
+
+class PopsMeasurementPriceComparison(models.Model):
+    _name = 'pops.measurement.price_comparison.lines'
+    _description = 'Measurement Price Comparison'
+
+    measurement_id = fields.Many2one('pops.measurement', 'Measurement', ondelete='cascade', required=True)
+    comparison_id = fields.Many2one('pops.price_comparison', 'Price Comparison')
+    # product_id = fields.Many2one('missions.product', 'Product') #ToDo: merge with products PR
+    product_id = fields.Char('Product')
+    price = fields.Float('Price')
+    photo = fields.Binary('Photo', help='Photo of the shelf')
+    # competitor_ids = fields.Many2many('res.partner', 'Competitors')
+    competitor_ids = fields.Char('Competitors') #ToDo: merge with products PR

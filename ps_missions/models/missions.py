@@ -45,7 +45,11 @@ class PopsMissions(models.Model):
     partner_id = fields.Many2one('res.partner', 'Partner')
     subject = fields.Char('Subject')
     instructions = fields.Text('Instructions')
-    type_mission = fields.Selection([('quizz', 'Quizz'), ('photo', 'Photo'), ('double', 'Quizz and Photo')],
+    type_mission = fields.Selection([('quizz', 'Quizz'),
+                                     ('photo', 'Photo'),
+                                     ('double', 'Quizz and Photo'),
+                                     ('price_comparison', 'Price Comparison'),
+                                     ],
                                     default='quizz', string='Type')
     date_create = fields.Date('Date Start')
     date_finished = fields.Date('Date Finished')
@@ -60,6 +64,7 @@ class PopsMissions(models.Model):
     reward = fields.Float(string='Reward')
     photo_ids = fields.One2many('pops.photo.lines', 'mission_id', 'Photo Lines', readonly=True, copy=True)
     quizz_ids = fields.One2many('pops.quizz', 'missions_id', 'Quizz Lines', readonly=True, copy=True)
+    price_comparison_ids = fields.One2many('pops.price_comparison', 'missions_id', string='Price Comparisons')
     measurement_count = fields.Integer(compute='_compute_measurement_count', string='Measurement Count', type='integer',
                                        groups='ps_missions.group_missions_user')
     establishment_id = fields.Many2one('pops.establishment', 'Establishment', ondelete='cascade', required=True)
@@ -149,6 +154,15 @@ class PopsQuizzLine(models.Model):
     alternative_id = fields.Many2one('pops.alternative', 'Alternative', ondelete='cascade', required=True)
     correct = fields.Boolean('Is Correct?')
     quizz_id = fields.Many2one('pops.quizz', 'Quizz', ondelete='cascade', required=True)
+
+
+class PopsPriceComparison(models.Model):
+    _name = 'pops.price_comparison'
+    _description = 'Price Comparison'
+
+    # product_id = fields.Many2one('missions.product', 'Product') #ToDo: merge with products PR
+    product_id = fields.Char('Product')
+    missions_id = fields.Many2one('pops.missions', 'Mission')
 
 
 class PopsEstablishment(models.Model):
