@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 - TODAY, Marcel Savegnago <marcel.savegnago@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="pops_product_form_view">
+        <field name="name">pops.product.form (in ps_missions_product)</field>
+        <field name="model">pops.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Product Name"/>
+                        <h1><field name="name" placeholder="Product Name"/></h1>
+                    </div>
+
+                    <group>
+                        <field name="barcode"/>
+                        <field name="default_code"/>
+                        <field name="category_id"/>
+                        <field name="brand_id"/>
+                        <field name="packaging_type_id"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Competitors" name="competitors_information">
+
+                            <field name="competitor_product_ids">
+                                <tree string="Competitors Products" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="brand_id"/>
+                                    <field name="category_id"/>
+                                    <field name="packaging_type_id"/>
+                                    <field name="barcode"/>
+                                    <field name="default_code"/>
+                                </tree>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="pops_product_search_view">
+        <field name="name">pops.product.search (in ps_missions_product)</field>
+        <field name="model">pops.product</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="brand_id"/>
+                <field name="category_id"/>
+                <field name="packaging_type_id"/>
+                <field name="barcode"/>
+                <field name="default_code"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <filter string="Include Archived" name="archived"
+                            domain="['|', ('active', '=', True), ('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                	<filter string="Category" name="category_id" domain="[]" context="{'group_by':'category_id'}"/>
+                	<filter string="Brand" name="brand_id" domain="[]" context="{'group_by':'brand_id'}"/>
+                    <filter string="Packaging Type" name="packaging_type_id" domain="[]" context="{'group_by':'packaging_type_id'}"/>
+               	</group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="pops_product_tree_view">
+        <field name="name">pops.product.tree (in ps_missions_product)</field>
+        <field name="model">pops.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="brand_id"/>
+                <field name="category_id"/>
+                <field name="packaging_type_id"/>
+                <field name="barcode"/>
+                <field name="default_code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pops_product_pivot" model="ir.ui.view">
+        <field name="name">Mission Products Pivot</field>
+        <field name="model">pops.product</field>
+        <field name="type">pivot</field>
+        <field name="arch" type="xml">
+            <pivot string="Mission Products" display_quantity="true">
+                <field name="category_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_pops_product_kanban" model="ir.ui.view">
+        <field name="name">Mission Products Kanban</field>
+        <field name="model">pops.product</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="image_small"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('pops.product', 'image_small', record.id.raw_value)" alt="Product"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                    <small t-if="record.brand_id.value">[<field name="brand_id"/>]</small>
+                                </strong>
+                                <ul>
+                                    <li>Barcode: <field name="barcode"></field></li>
+                                </ul>
+                                <ul>
+                                    <li>Category: <field name="category_id"></field></li>
+                                </ul>
+                                <ul>
+                                    <li>Packaging Type: <field name="packaging_type_id"></field></li>
+                                </ul>
+                                <div name="tags"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="oe_kanban_bottom_right">
+                                        <img t-att-src="kanban_image('pops.product.brand', 'image_small', record.brand_id.raw_value)" t-att-title="record.brand_id.value" t-att-alt="record.brand_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pops_product_act_window">
+        <field name="name">Mission Products</field>
+        <field name="res_model">pops.product</field>
+        <field name="view_mode">kanban,tree,pivot,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="pops_product_main_menu">
+        <field name="name">Mission Products</field>
+        <field name="parent_id" ref="ps_missions.menu_missions"/>
+        <field name="action" ref="pops_product_act_window"/>
+        <field name="sequence" eval="52"/>
+    </record>
+
+    <record model="ir.ui.menu" id="pops_product_menu">
+        <field name="name">Mission Products</field>
+        <field name="parent_id" ref="pops_product_main_menu"/>
+        <field name="action" ref="pops_product_act_window"/>
+        <field name="sequence" eval="10"/>
+    </record>
+
+</odoo>
