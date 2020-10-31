@@ -92,7 +92,7 @@
     </record>
 
     <record model="ir.ui.menu" id="pops_product_brand_menu">
-        <field name="name">Mission Product Brands</field>
+        <field name="name">Product Brands</field>
         <field name="parent_id" ref="pops_product_main_menu"/>
         <field name="action" ref="pops_product_brand_act_window"/>
         <field name="sequence" eval="20"/>

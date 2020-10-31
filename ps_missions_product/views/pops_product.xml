@@ -38,7 +38,7 @@
                     <notebook>
                         <page string="Competitors" name="competitors_information">
 
-                            <field name="competitor_product_ids">
+                            <field name="competitor_product_ids" domain="[('id', 'not in', [id])]">
                                 <tree string="Competitors Products" editable="bottom">
                                     <field name="name"/>
                                     <field name="brand_id"/>
@@ -162,13 +162,13 @@
 
     <record model="ir.ui.menu" id="pops_product_main_menu">
         <field name="name">Mission Products</field>
-        <field name="parent_id" ref="ps_missions.menu_missions"/>
+        <field name="parent_id" ref="ps_missions.menu_missions_config"/>
         <field name="action" ref="pops_product_act_window"/>
         <field name="sequence" eval="52"/>
     </record>
 
     <record model="ir.ui.menu" id="pops_product_menu">
-        <field name="name">Mission Products</field>
+        <field name="name">Products</field>
         <field name="parent_id" ref="pops_product_main_menu"/>
         <field name="action" ref="pops_product_act_window"/>
         <field name="sequence" eval="10"/>
