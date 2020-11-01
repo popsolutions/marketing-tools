@@ -29,7 +29,8 @@
         'security/ir.model.access.csv',
         'views/measurements_views.xml',
         'views/missions_views.xml',
+        'data/products.xml',
     ],
     'installable': True,
-    'application': True,
+    'application': False,
 }
