@@ -98,15 +98,6 @@
                   </tree>          		
 	      				</field>
               </page>
-                <page string="Price Comparison" name="price_comparison">
-                    <group>
-                       <field name="price_comparison_ids" nolabel="1">
-                           <tree string="Price Comparison" editable="bottom">
-                               <field name="product_id"/>
-                           </tree>
-                       </field>
-                    </group>
-                </page>
             </notebook>
 
             <group>
@@ -252,35 +243,6 @@
        <field name="help" type="html">
          <p class="o_view_nocontent_create">
            Create a new Quizz
-         </p>
-       </field>
-    </record>
-
-    <!-- Price Comparison -->
-    <record id="pops_price_comparison_form" model="ir.ui.view" >
-      <field name="name">pops.price_comparison.form</field>
-      <field name="model">pops.price_comparison</field>
-      <field name="arch" type="xml">
-        <form>
-        	<sheet>
-                <group>
-                    <field name="product_id"/>
-	          		<field name="missions_id"/>
-	          	</group>
-          	</sheet>
-        </form>
-      </field>
-    </record>
-
-    <record id="action_view_price_comparison" model="ir.actions.act_window">
-       <field name="name">Price Comparison</field>
-       <field name="type">ir.actions.act_window</field>
-       <field name="res_model">pops.price_comparison</field>
-       <field name="view_type">form</field>
-       <field name="view_mode">tree,form</field>
-       <field name="help" type="html">
-         <p class="o_view_nocontent_create">
-           Create a new Price Comparison
          </p>
        </field>
     </record>

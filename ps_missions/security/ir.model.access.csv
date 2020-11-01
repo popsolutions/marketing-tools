@@ -7,16 +7,12 @@ ps_measerements_quizz_lines_manager,"Measurements Quizz Lines Manager",model_pop
 ps_measerements_quizz_lines_user,"Measurements Quizz Lines user",model_pops_measurement_quizzlines,ps_missions.group_missions_user,1,1,1,1
 ps_measerements_photo_lines_manager,"Measurements Photo Lines Manager",model_pops_measurement_photolines,ps_missions.group_missions_manager,1,1,1,1
 ps_measerements_photo_lines_user,"Measurements Photo Lines user",model_pops_measurement_photolines,ps_missions.group_missions_user,1,1,1,1
-ps_measerements_pricecomparison_lines_manager,"Measurements Price Comparison Lines Manager",model_pops_measurement_price_comparison_lines,ps_missions.group_missions_manager,1,1,1,1
-ps_measerements_pricecomparison_lines_user,"Measurements Price Comparison Lines user",model_pops_measurement_price_comparison_lines,ps_missions.group_missions_user,1,1,1,1
 ps_missions_manager,"Missions Manager",model_pops_missions,ps_missions.group_missions_manager,1,1,1,1
 ps_missions_user,"Missions user",model_pops_missions,ps_missions.group_missions_user,1,1,1,0
 ps_photo_lines_manager,"Photo Lines Manager",model_pops_photo_lines,ps_missions.group_missions_manager,1,1,1,1
 ps_photo_lines_user,"Photo Lines User",model_pops_photo_lines,ps_missions.group_missions_user,1,1,1,0
 ps_quizz_manager,"Quizz Manager",model_pops_quizz,ps_missions.group_missions_manager,1,1,1,1
 ps_quizz_user,"Quizz User",model_pops_quizz,ps_missions.group_missions_user,1,1,1,0
-ps_price_comparison_manager,"Price Comparison Manager",model_pops_price_comparison,ps_missions.group_missions_manager,1,1,1,1
-ps_price_comparison_user,"Price Comparison User",model_pops_price_comparison,ps_missions.group_missions_user,1,1,1,0
 ps_quizz_lines_manager,"Quizz Lines Manager",model_pops_quizz_lines,ps_missions.group_missions_manager,1,1,1,1
 ps_quizz_lines_user,"Quizz Lines User",model_pops_quizz_lines,ps_missions.group_missions_user,1,1,1,0
 ps_alternative_manager,"Alternative Manager",model_pops_alternative,ps_missions.group_missions_manager,1,1,1,1

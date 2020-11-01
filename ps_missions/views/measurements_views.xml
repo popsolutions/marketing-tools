@@ -105,26 +105,7 @@
                     </tree>
 	      				  </field>
                 </page>
-                <page string="Measurement Price Comparison Lines" name="measurement_pricecomparison_lines">
-                <!-- ToDo: Implement many2many_kanban widget
-                     Check https://www.cybrosys.com/blog/many2many-fields-and-its-widgets-odoo               -->
-                  <field name="price_comparison_lines_ids" attrs="{'readonly': [('state', 'in', ('done'))]}">
-                    <form string="Price Comparisons">
-                      <field name="product_id"/>
-                      <field name="price"/>
-                      <field name="photo" widget="image"/>
-<!--                      <field name="competitor_ids" widget="many2many_tags"/> ToDo: merge with products PR-->
-                      <field name="competitor_ids"/>
-                    </form>
-                    <tree string="Price Comparisons" editable="bottom">
-                      <field name="product_id"/>
-                      <field name="price"/>
-                      <field name="photo"/>
-<!--                      <field name="competitor_ids" widget="many2many_tags"/> ToDo: merge with products PR-->
-                      <field name="competitor_ids"/>
-                    </tree>
-                  </field>
-                </page>
+
 	          	</notebook>
           	</sheet>
         </form>

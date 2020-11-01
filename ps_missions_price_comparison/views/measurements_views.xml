@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+   <record model="ir.ui.view" id="mission_price_comparison_measurement_inherit_form">
+       <field name="name">measurement.price_comparison.inherit.form</field>
+       <field name="model">pops.measurement</field>
+       <field name="inherit_id" ref="ps_missions.pops_measurement_form" />
+       <field name="priority" eval="14"/>
+       <field name="arch" type="xml">
+           <notebook position="inside">
+                <page string="Measurement Price Comparison Lines" name="measurement_pricecomparison_lines">
+                <!-- ToDo: Implement many2many_kanban widget
+                     Check https://www.cybrosys.com/blog/many2many-fields-and-its-widgets-odoo               -->
+                  <field name="price_comparison_lines_ids" attrs="{'readonly': [('state', 'in', ('done'))]}">
+                    <form string="Price Comparisons">
+                      <field name="product_id"/>
+                      <field name="price"/>
+                      <field name="photo" widget="image"/>
+        <!--                      <field name="competitor_ids" widget="many2many_tags"/> ToDo: merge with products PR-->
+                      <field name="competitor_ids"/>
+                    </form>
+                    <tree string="Price Comparisons" editable="bottom">
+                      <field name="product_id"/>
+                      <field name="price"/>
+                      <field name="photo"/>
+        <!--                      <field name="competitor_ids" widget="many2many_tags"/> ToDo: merge with products PR-->
+                      <field name="competitor_ids"/>
+                    </tree>
+                  </field>
+                </page>
+           </notebook>
+       </field>
+   </record>
+</odoo>
