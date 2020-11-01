@@ -5,7 +5,7 @@ from odoo import api, fields, models, tools, SUPERUSER_ID, _
 MISSION_PRODUCT = {
     'quizz': 'ps_missions.product_mission_quizz',
     'photo': 'ps_missions.product_mission_photo',
-    'double': 'ps_missions.product_mission_quizz_and_photo'
+    'double': 'ps_missions.product_mission_quizz_and_photo',
 }
 
 
