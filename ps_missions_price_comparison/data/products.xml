@@ -11,7 +11,7 @@
             <field name="description">This product is used in Missions module to invoice the Measurement related to Price Comparison mission type</field>
         </record>
 
-        <record id="product_mission_price_comparison" model="product.template">
+        <record id="product_mission_price_comparison" model="product.product">
             <field name="name">Mission - Price Comparison</field>
             <field name="standard_price">0.00</field>
             <field name="list_price">0.00</field>

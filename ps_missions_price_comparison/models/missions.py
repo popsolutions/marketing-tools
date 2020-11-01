@@ -1,4 +1,9 @@
 from odoo import fields, models
+from odoo.addons.ps_missions.models.missions import MISSION_PRODUCT
+
+MISSION_PRODUCT.update(
+    {'price_comparison': 'ps_missions_price_comparison.product_mission_price_comparison'}
+)
 
 
 class PopsMissions(models.Model):
