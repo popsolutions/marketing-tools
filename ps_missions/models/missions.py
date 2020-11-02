@@ -156,6 +156,7 @@ class PopsEstablishment(models.Model):
     _description = 'Establishment'
 
     name = fields.Char('Name', required=True)
+    type_id = fields.Many2one('pops.establishment.type', 'Type', required=True)
     zip_code = fields.Char('Zip Code')
     address = fields.Char('Address')
     neighbor = fields.Char('Neighbor')
@@ -163,3 +164,11 @@ class PopsEstablishment(models.Model):
     state = fields.Char('State')
     latitude = fields.Char('Latitude')
     longitude = fields.Char('Longitude')
+
+
+class PopsEstablishmentType(models.Model):
+    _name = 'pops.establishment.type'
+    _description = 'Establishment Type'
+
+    name = fields.Char('Name', required=True)
+    description = fields.Text('Description')

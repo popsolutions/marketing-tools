@@ -24,5 +24,7 @@
 
     <menuitem action="action_view_establishment" id="menu_misions_establishment" parent="menu_missions_operations" name="Establishments"
     sequence="9"/>
+    <menuitem action="action_view_establishment_type" id="menu_missions_establishment_type" parent="menu_missions_operations" name="Establishments Type"
+    sequence="10"/>
 
 </odoo>

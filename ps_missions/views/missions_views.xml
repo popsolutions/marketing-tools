@@ -295,9 +295,9 @@
       <field name="arch" type="xml">
         <form>
         	<sheet> 
-            <grpup>
               <group>
                 <field name="name"/>
+                <field name="type_id"/>
                 <field name="zip_code"/>
                 <field name="address"/>
                 <field name="neighbor"/>
@@ -306,8 +306,7 @@
                 <field name="latitude"/>
                 <field name="longitude"/>
               </group>
-            </grpup>
-          </sheet>          
+          </sheet>
         </form>
       </field>
     </record> 
@@ -333,6 +332,38 @@
          <p class="o_view_nocontent_create">
            Create a new Establishment
          </p>
+       </field>
+    </record>
+
+   <record id="pops_establishment_type_form" model="ir.ui.view" >
+      <field name="name">pops.establishment.type.form</field>
+      <field name="model">pops.establishment.type</field>
+      <field name="arch" type="xml">
+        <form>
+        	<sheet>
+              <group>
+                <field name="name"/>
+                <field name="description"/>
+              </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="action_view_establishment_type" model="ir.actions.act_window">
+       <field name="name">Establishment Type</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">pops.establishment.type</field>
+       <field name="view_type">form</field>
+       <field name="view_mode">tree,form</field>
+       <field name="help" type="html">
+         <p class="o_view_nocontent_create">
+           Create a new Establishment Type
+         </p>
+           <p>
+               i.e: Supermarket, Minimarket, Bar
+           </p>
        </field>
     </record>
   </data>
