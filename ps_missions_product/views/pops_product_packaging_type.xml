@@ -91,7 +91,7 @@
     </record>
 
     <record model="ir.ui.menu" id="pops_product_packaging_type_menu">
-        <field name="name">Mission Product Packaging Types</field>
+        <field name="name">Product Packaging Types</field>
         <field name="parent_id" ref="pops_product_main_menu"/>
         <field name="action" ref="pops_product_packaging_type_act_window"/>
         <field name="sequence" eval="40"/>
