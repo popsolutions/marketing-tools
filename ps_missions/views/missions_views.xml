@@ -295,10 +295,9 @@
       <field name="arch" type="xml">
         <form>
         	<sheet> 
-            <grpup>
               <group>
                 <field name="name"/>
-                <field name="type"/>
+                <field name="type_id"/>
                 <field name="zip_code"/>
                 <field name="address"/>
                 <field name="neighbor"/>
@@ -307,8 +306,7 @@
                 <field name="latitude"/>
                 <field name="longitude"/>
               </group>
-            </grpup>
-          </sheet>          
+          </sheet>
         </form>
       </field>
     </record> 

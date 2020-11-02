@@ -156,7 +156,7 @@ class PopsEstablishment(models.Model):
     _description = 'Establishment'
 
     name = fields.Char('Name', required=True)
-    type = fields.Many2one('pops.establishment.type', 'Type', required=True)
+    type_id = fields.Many2one('pops.establishment.type', 'Type', required=True)
     zip_code = fields.Char('Zip Code')
     address = fields.Char('Address')
     neighbor = fields.Char('Neighbor')
