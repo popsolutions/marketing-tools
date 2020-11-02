@@ -1,4 +1,9 @@
 from odoo import fields, models
+from odoo.addons.ps_missions.models.measurement import MEASUREMENT_PRODUCT
+
+MEASUREMENT_PRODUCT.update(
+    {'price_comparison': 'ps_missions_price_comparison.product_mission_price_comparison'}
+)
 
 
 class PopsMeasurement(models.Model):
@@ -17,4 +22,4 @@ class PopsMeasurementPriceComparison(models.Model):
     product_id = fields.Many2one('pops.product', 'Product')
     price = fields.Float('Price')
     photo = fields.Binary('Photo', help='Photo of the shelf')
-    competitor_ids = fields.Many2many('res.partner', 'Competitors')
+    competitor_ids = fields.Many2many('pops.product', string='Competitors')
