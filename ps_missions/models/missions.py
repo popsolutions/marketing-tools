@@ -5,7 +5,7 @@ from odoo import api, fields, models, tools, SUPERUSER_ID, _
 MISSION_PRODUCT = {
     'quizz': 'ps_missions.product_mission_quizz',
     'photo': 'ps_missions.product_mission_photo',
-    'double': 'ps_missions.product_mission_quizz_and_photo'
+    'double': 'ps_missions.product_mission_quizz_and_photo',
 }
 
 
@@ -42,11 +42,14 @@ class PopsMissions(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('open', 'Open'), ('closed', 'Closed')],
                              default='draft', string='State')
     create_by_user_id = fields.Many2one('res.users', 'User', default=lambda self: self.env.uid)
-    partner_id = fields.Many2one('res.partner', 'Partner')
+    partner_id = fields.Many2one('res.partner', 'Partner', required=True)
     subject = fields.Char('Subject')
     instructions = fields.Text('Instructions')
-    type_mission = fields.Selection([('quizz', 'Quizz'), ('photo', 'Photo'), ('double', 'Quizz and Photo')],
-                                    default='quizz', string='Type')
+    type_mission = fields.Selection([('quizz', 'Quizz'),
+                                     ('photo', 'Photo'),
+                                     ('double', 'Quizz and Photo'),
+                                     ],
+                                    default='quizz', string='Type', required=True)
     date_create = fields.Date('Date Start')
     date_finished = fields.Date('Date Finished')
     closed = fields.Boolean('Closed?')    
@@ -57,7 +60,7 @@ class PopsMissions(models.Model):
     mission_map = fields.Char(string='Map')
     limit = fields.Integer('Limit') 
     scores = fields.Float(string='Scores')
-    reward = fields.Float(string='Reward')
+    reward = fields.Float(string='Reward', required=True)
     photo_ids = fields.One2many('pops.photo.lines', 'mission_id', 'Photo Lines', readonly=True, copy=True)
     quizz_ids = fields.One2many('pops.quizz', 'missions_id', 'Quizz Lines', readonly=True, copy=True)
     measurement_count = fields.Integer(compute='_compute_measurement_count', string='Measurement Count', type='integer',
@@ -87,7 +90,7 @@ class PopsMissions(models.Model):
         inv_line_vals = {
             'product_id': product_id.id,
             'name': product_id.description,
-            'price_unit': product_id.lst_price,
+            'price_unit': self.reward,
             'account_id': account_id.id,
             'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
         }

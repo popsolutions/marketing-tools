@@ -33,7 +33,7 @@
             <field name="description">This product is used in Missions module to invoice the Measurement related to Quizz and Photo mission type</field>
         </record>
 
-        <record id="product_mission_quizz" model="product.template">
+        <record id="product_mission_quizz" model="product.product">
             <field name="name">Mission - Quizz Only</field>
             <field name="standard_price">0.00</field>
             <field name="list_price">0.00</field>
