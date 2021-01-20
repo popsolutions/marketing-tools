@@ -1,0 +1,96 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="sna_instagram_post_list">
+      <field name="name">sna_instagram_post list</field>
+      <field name="model">sna.instagram.post</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="post_id"/>
+          <field name="date"/>
+          <field name="caption"/>
+          <field name="location" />
+          <!-- <field name="media_count"/>
+          <field name="hashtag_count"/> -->
+          <field name="like_count"/>
+          <field name="comment_count"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="sna_instagram_post_graph_view"> 
+      <field name="name">sna_instagram_post graph</field>
+      <field name="model">sna.instagram.post</field> 
+      <field name="arch" type="xml"> 
+        <graph type="line"> 
+          <field name="date" type="row"/> 
+          <field name="like_count" type="measure" /> 
+          <field name="comment_count" type="measure" /> 
+        </graph>
+      </field> 
+    </record> 
+
+    <record model="ir.ui.view" id="sna_instagram_post_form_view">
+      <field name="name">sna_instagram_post form</field>
+      <field name="model">sna.instagram.post</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="img_attach"/>
+              </group>
+              <group col="4" colspan="2">
+                <field name="post_id"/>
+                <field name="date"/>
+              </group>
+              <group col="4" colspan="2">
+                <field name="location"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+              </group>
+              <group string="Caption" colspan="2">
+                <field name="caption" nolabel="1"/>
+              </group>
+              <notebook colspan="2">
+                <page name="media" string="Media">
+                  <field name="media_ids">
+                    <tree>
+                      <field name="media_id"/>
+                      <field name="url"/>
+                    </tree>
+                  </field>
+                </page>
+                <page name="hashtags" string="Hashtags">
+                  <field name="hashtag_ids">
+                    <tree>
+                      <field name="name"/>
+                    </tree>
+                  </field>
+                </page>
+                <page name="comments" string="Comments">
+                  <field name="comment_ids">
+                    <tree>
+                      <field name="comment_text"/>
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="sna_instagram_post_action">
+      <field name="name">Instagram Post</field>
+      <field name="res_model">sna.instagram.post</field>
+      <field name="view_mode">tree,form,graph</field>
+    </record>
+
+    <menuitem name="Instagram" id="menu_instagram" parent="social_network_analytics_base.menu_root"/>
+      <menuitem name="Posts" id="menu_sna_instagram_posts" parent="menu_instagram"
+              action="sna_instagram_post_action"/>
+  </data>
+</odoo>

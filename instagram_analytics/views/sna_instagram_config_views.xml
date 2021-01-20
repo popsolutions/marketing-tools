@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="sna_instagram_config_list_view">
+      <field name="name">sna_instagram_config list</field>
+      <field name="model">sna.instagram.config</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="username"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="sna_instagram_config_form_view">
+      <field name="name">sna_instagram_config form</field>
+      <field name="model">sna.instagram.config</field>
+      <field name="arch" type="xml">
+        <form string="Instagram configuration">
+          <sheet>
+            <group string="Instagram" col="6">
+              <div>
+                <div>
+                  <label for="name"/>
+                  <field name="name"/>
+                </div>
+                <div>
+                  <label for="username"/>
+                  <field name="username"/>
+                </div>
+                <div>
+                  <label for="password"/>
+                  <field name="password" password="True"/>
+                </div>
+              </div>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="sna_instagram_config_action" model="ir.actions.act_window">
+      <field name="name">Instagram Config</field>
+      <field name="res_model">sna.instagram.config</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sna_instagram_config" name="Settings"
+        parent="menu_instagram" action="sna_instagram_config_action"/>
+  </data>
+</odoo>

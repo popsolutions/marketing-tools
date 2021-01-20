@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem name="Social Network Analytics" id="menu_root" web_icon="social_network_analytics_base,static/description/icon.png"/>
+</odoo>
+
