@@ -28,7 +28,9 @@
                 <button name="action_doing" type="object" string="Process" states="ordered" class="oe_highlight"/>
                 <button name="action_done" type="object" string="Done" states="doing" class="oe_highlight"/>
                 <button name="action_approve" type="object" string="Approve" states="done" class="oe_highlight"/>
+                <button name="action_repprove" type="object" string="Rejected" states="done" class="oe_highlight"/>
                 <button name="action_mark_as_paid" type="object" string="Mark as Paid" states="approved" class="oe_highlight"/>
+                <button name="action_rejected_to_done" type="object" string="Back to Done" states="rejected"/>
                 <button name="action_draft" type="object" string="Back to Draft" states="ordered"/>
                 <field name="state" widget="statusbar"/>
           </header>
