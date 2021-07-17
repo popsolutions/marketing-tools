@@ -24,6 +24,7 @@ class PopsMeasurement(models.Model):
                               ('doing', 'Doing'),
                               ('done', 'Done'),
                               ('approved', 'Approved'),
+                              ('rejected', 'Rejected'),
                               ('paid', 'Paid')],
                              default='draft', string='State', copy=False)
     date_started = fields.Date('Date Started')
@@ -137,6 +138,16 @@ class PopsMeasurement(models.Model):
     def action_approve(self):
         self._create_vendor_invoice()
         self.state = 'approved'
+
+    @api.multi
+    def action_repprove(self):
+        self._create_vendor_invoice()
+        self.state = 'rejected'
+
+    @api.multi
+    def action_rejected_to_done(self):
+        self._create_vendor_invoice()
+        self.state = 'done'
 
     @api.multi
     def action_mark_as_paid(self):
