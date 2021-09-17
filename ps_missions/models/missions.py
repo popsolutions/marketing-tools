@@ -120,6 +120,17 @@ class PopsMissions(models.Model):
         """Get Back mission to Draft"""
         self.state = 'draft'
 
+    @api.multi
+    def action_open_missions_measurement(self):
+        return {
+            'name': _('measurement'),
+            'domain': [('missions_id', '=', self.id)],
+            'view_type': 'form',
+            'res_model': 'pops.measurement',
+            'view_id': False,
+            'view_mode': 'tree,form',
+            'type': 'ir.actions.act_window'
+        }
 
 class PopsPhotoLine(models.Model):
     _name = 'pops.photo.lines'
