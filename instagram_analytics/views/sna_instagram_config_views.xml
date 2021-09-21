@@ -2,45 +2,63 @@
   <data>
     <!-- explicit list view definition -->
     <record model="ir.ui.view" id="sna_instagram_config_list_view">
-      <field name="name">sna_instagram_config list</field>
+      <field name="sna_account_name">sna_instagram_config list</field>
       <field name="model">sna.instagram.config</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="username"/>
+          <field name="partner_id"/>
+          <field name="sna_account_name"/>
+          <field name="sna_instagram_username"/>
         </tree>
       </field>
     </record>
 
     <record model="ir.ui.view" id="sna_instagram_config_form_view">
-      <field name="name">sna_instagram_config form</field>
+      <field name="sna_account_name">sna_instagram_config form</field>
       <field name="model">sna.instagram.config</field>
       <field name="arch" type="xml">
         <form string="Instagram configuration">
           <sheet>
-            <group string="Instagram" col="6">
+            <group string="Instagram" col="1">
               <div>
+                <group>
+                  <field name="partner_id"/>
+                </group>
                 <div>
-                  <label for="name"/>
-                  <field name="name"/>
+                  <label for="sna_account_name"/>
+                  <field name="sna_account_name"/>
                 </div>
                 <div>
-                  <label for="username"/>
-                  <field name="username"/>
+                  <label for="sna_instagram_username"/>
+                  <field name="sna_instagram_username"/>
                 </div>
                 <div>
-                  <label for="password"/>
-                  <field name="password" password="True"/>
+                  <label for="sna_instagram_password"/>
+                  <field name="sna_instagram_password" password="True"/>
                 </div>
               </div>
             </group>
+              <notebook>
+                <page string="Contexto" name="sna_instagram_context_acount">
+                    <field name="context_acount_ids" readonly="False">
+                        <form string="Hitos">
+                            <field name="context_description"/>
+                            <field name="context_sentiment"/>
+                        </form>
+                        <tree string="Hitos" editable="bottom">
+                            <field name="context_description"/>
+                            <field name="context_sentiment"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
           </sheet>
         </form>
       </field>
     </record>
 
     <record id="sna_instagram_config_action" model="ir.actions.act_window">
-      <field name="name">Instagram Config</field>
+      <field name="sna_account_name">Instagram Config</field>
       <field name="res_model">sna.instagram.config</field>
       <field name="view_mode">tree,form</field>
     </record>

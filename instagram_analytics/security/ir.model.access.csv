@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sna_instagram_analytics_config,sna_instagram_analytics.config,model_sna_instagram_config,,1,1,1,1
+access_sna_instagram_analytics_config_context_acount,model_sna_instagram_context_acount,model_sna_instagram_context_acount,,1,1,1,1
 access_sna_instagram_analytics_post,sna_instagram_analytics.post,model_sna_instagram_post,,1,0,0,1
 access_sna_instagram_analytics_post_media,sna_instagram_analytics.post.media,model_sna_instagram_post_media,,1,0,0,1
 access_sna_instagram_analytics_post_hashtag,sna_instagram_analytics.post.hashtag,model_sna_instagram_post_hashtag,,1,1,1,1

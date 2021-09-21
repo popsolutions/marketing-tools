@@ -9,19 +9,22 @@ from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationE
 class InstagramConfig(models.Model):
     _name = 'sna.instagram.config'
 
-    name = fields.Char()
-    username = fields.Char()
-    password = fields.Char()
+    sna_account_name = fields.Char()
+    partner_id = fields.Many2one('res.partner')
+    sna_instagram_username = fields.Char()
+    sna_instagram_password = fields.Char()
+    context_acount_ids = fields.One2many('sna.instagram.context.acount', 'account_namelines_id', 'Account Context',
+                                      readonly=True, copy=True)
 
     @api.multi
     def _start_getting_posts(self, values):
-        username = values['username']
-        password = values['password']
+        sna_instagram_username = values['sna_instagram_username']
+        sna_instagram_password = values['sna_instagram_password']
 
         try:
             more = True
 
-            api = Client(username, password)
+            api = Client(sna_instagram_username, sna_instagram_username)
             print(api)
 
             results = api.self_feed(count=50)
@@ -118,3 +121,12 @@ class InstagramConfig(models.Model):
     #       'function': '_',
     #       'args': 
     #   })
+
+
+class SnaInstagramConfigContextAcount(models.Model):
+  _name = 'sna.instagram.context.acount'
+
+  context_description = fields.Char()
+  context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')])
+  account_namelines_id = fields.Many2one('sna.instagram.config', 'Account name', ondelete='cascade', required=True)
+
