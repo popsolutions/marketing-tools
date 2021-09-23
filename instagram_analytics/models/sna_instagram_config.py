@@ -24,7 +24,7 @@ class InstagramConfig(models.Model):
         try:
             more = True
 
-            api = Client(sna_instagram_username, sna_instagram_username)
+            api = Client(sna_instagram_username, sna_instagram_password)
             print(api)
 
             results = api.self_feed(count=50)
