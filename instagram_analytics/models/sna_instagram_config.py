@@ -62,7 +62,7 @@ class InstagramConfig(models.Model):
 
                         post = self.sudo().env['sna.instagram.post'].create(post_data)
 
-                        comments = i['preview_comments']
+                        comments = api.media_n_comments(i['id'], n=i['comment_count'])
 
                         comment_ids = []
 
