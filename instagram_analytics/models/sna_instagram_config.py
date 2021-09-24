@@ -109,6 +109,14 @@ class InstagramConfig(models.Model):
             return {'warning': mess}
 
     @api.model
+    def _start_getting_posts_all(self):
+      configs = self.env['sna.instagram.config'].search([]);
+
+      for config in configs:
+        self._start_getting_posts({'sna_instagram_username': config['sna_instagram_username'],
+                                   'sna_instagram_password': config['sna_instagram_password']})
+
+    @api.model
     def create(self, values):
         record = super(InstagramConfig, self).create(values)
         print('create\n\n')
@@ -129,4 +137,3 @@ class SnaInstagramConfigContextAcount(models.Model):
   context_description = fields.Char()
   context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')])
   account_namelines_id = fields.Many2one('sna.instagram.config', 'Account name', ondelete='cascade', required=True)
-
