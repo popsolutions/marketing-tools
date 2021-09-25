@@ -6,6 +6,7 @@
       <field name="model">sna.instagram.post</field>
       <field name="arch" type="xml">
         <tree>
+          <field name="partner_id"/>
           <field name="post_id"/>
           <field name="date"/>
           <field name="caption"/>
@@ -82,11 +83,25 @@
       </field>
     </record>
 
+
+    <record model="ir.ui.view" id="sna_instagram_post_view_filter">
+	    <field name="name">sna.instagram.post.filter</field>
+	    <field name="model">sna.instagram.post</field>
+	    <field name="arch" type="xml">
+	        <search string="Search Instagram Post">
+            <group expand="0" string="Group By">
+              <filter string="Partner" name="partner_id" context="{'group_by':'partner_id'}"/>
+            </group>
+	        </search>
+	    </field>
+    </record>
+
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="sna_instagram_post_action">
       <field name="name">Instagram Post</field>
       <field name="res_model">sna.instagram.post</field>
       <field name="view_mode">tree,form,graph</field>
+      <field name="search_view_id" ref="sna_instagram_post_view_filter"/>
     </record>
 
     <menuitem name="Instagram" id="menu_instagram" parent="social_network_analytics_base.menu_root"/>

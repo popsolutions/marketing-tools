@@ -47,6 +47,7 @@ class InstagramConfig(models.Model):
 
                         post_data = {
                           'post_id': i['id'],
+                          'config_id': values['config_id'],
                           'date': datetime.fromtimestamp(i['taken_at']),
                           'caption': caption,
                           'like_count': i['like_count'],
@@ -114,7 +115,8 @@ class InstagramConfig(models.Model):
 
       for config in configs:
         self._start_getting_posts({'sna_instagram_username': config['sna_instagram_username'],
-                                   'sna_instagram_password': config['sna_instagram_password']})
+                                   'sna_instagram_password': config['sna_instagram_password'],
+                                   'config_id': config['id']})
 
     @api.model
     def create(self, values):

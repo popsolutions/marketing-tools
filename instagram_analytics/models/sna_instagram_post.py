@@ -7,6 +7,8 @@ class InstagramPost(models.Model):
     _name = 'sna.instagram.post'
 
     post_id = fields.Char("Instagram Post ID")
+    config_id = fields.Many2one('sna.instagram.config')
+    partner_id = fields.Many2one('res.partner', related='config_id.partner_id', readonly=True, store=True)
     date = fields.Datetime()
     caption = fields.Text()
     like_count = fields.Integer()
