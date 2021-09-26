@@ -104,6 +104,15 @@
       <field name="search_view_id" ref="sna_instagram_post_view_filter"/>
     </record>
 
+    <!-- actions opening views on models -->
+    <record model="ir.actions.server" id="start_getting_posts_all">
+      <field name="name">Get Post</field>
+      <field name="model_id" ref= "instagram_analytics.model_sna_instagram_config"/>
+      <field name="state">code</field>
+      <field name="code">action = model._start_getting_posts_all()</field>
+    </record>
+
+    <menuitem name="Get Posts" id="menu_get_posts" parent="social_network_analytics_base.menu_root" action="start_getting_posts_all"/>
     <menuitem name="Instagram" id="menu_instagram" parent="social_network_analytics_base.menu_root"/>
       <menuitem name="Posts" id="menu_sna_instagram_posts" parent="menu_instagram"
               action="sna_instagram_post_action"/>
