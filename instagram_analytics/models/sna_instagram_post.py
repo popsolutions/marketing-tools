@@ -33,14 +33,14 @@ class InstagramPostMedia(models.Model):
 
     media_id = fields.Char()
     url = fields.Char()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
 
 
 class InstagramPostHashtag(models.Model):
     _name = 'sna.instagram.post.hashtag'
 
     name = fields.Char()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
 
 
 class InstagramPostComment(models.Model):
@@ -48,5 +48,5 @@ class InstagramPostComment(models.Model):
 
     comment_id = fields.Char()
     comment_text = fields.Text()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
     date = fields.Datetime()
