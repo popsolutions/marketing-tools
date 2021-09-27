@@ -131,7 +131,7 @@ class InstagramConfig(models.Model):
 
     @api.model
     def _start_getting_posts_all(self):
-      configs = self.env['sna.instagram.config'].search([]);
+      configs = self.env['sna.instagram.config'].search([])
 
       for config in configs:
         self._start_getting_posts({'sna_instagram_username': config['sna_instagram_username'],
