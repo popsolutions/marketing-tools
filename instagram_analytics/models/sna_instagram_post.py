@@ -7,6 +7,8 @@ class InstagramPost(models.Model):
     _name = 'sna.instagram.post'
 
     post_id = fields.Char("Instagram Post ID")
+    config_id = fields.Many2one('sna.instagram.config')
+    partner_id = fields.Many2one('res.partner', related='config_id.partner_id', readonly=True, store=True)
     date = fields.Datetime()
     caption = fields.Text()
     like_count = fields.Integer()
@@ -31,14 +33,14 @@ class InstagramPostMedia(models.Model):
 
     media_id = fields.Char()
     url = fields.Char()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
 
 
 class InstagramPostHashtag(models.Model):
     _name = 'sna.instagram.post.hashtag'
 
     name = fields.Char()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
 
 
 class InstagramPostComment(models.Model):
@@ -46,5 +48,5 @@ class InstagramPostComment(models.Model):
 
     comment_id = fields.Char()
     comment_text = fields.Text()
-    post_id = fields.Many2one('sna.instagram.post')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
     date = fields.Datetime()

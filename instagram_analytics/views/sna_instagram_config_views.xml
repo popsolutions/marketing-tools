@@ -58,7 +58,7 @@
     </record>
 
     <record id="sna_instagram_config_action" model="ir.actions.act_window">
-      <field name="sna_account_name">Instagram Config</field>
+      <field name="name">Instagram Config</field>
       <field name="res_model">sna.instagram.config</field>
       <field name="view_mode">tree,form</field>
     </record>

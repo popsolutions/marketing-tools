@@ -47,6 +47,7 @@ class InstagramConfig(models.Model):
 
                         post_data = {
                           'post_id': i['id'],
+                          'config_id': values['config_id'],
                           'date': datetime.fromtimestamp(i['taken_at']),
                           'caption': caption,
                           'like_count': i['like_count'],
@@ -60,22 +61,37 @@ class InstagramConfig(models.Model):
                         if 'location' in i:
                           print(i['location'])
 
-                        post = self.sudo().env['sna.instagram.post'].create(post_data)
+                        query = "select id from sna_instagram_post where post_id = '" + i['id'] + "'"
+                        self.env.cr.execute(query)
+                        postExists = self.env.cr.fetchall()
 
-                        comments = i['preview_comments']
+                        if postExists:
+                          post_data['id'] = postExists[0][0]
+                          post = self.sudo().env['sna.instagram.post'].write(post_data)
+                          post_id = post_data['id']
+                        else:
+                          post = self.sudo().env['sna.instagram.post'].create(post_data)
+                          post_id = post.id
+
+                        comments = api.media_n_comments(i['id'], n=i['comment_count'])
 
                         comment_ids = []
 
                         for c in comments:
-                          comment_data = {
-                            'comment_id': c['pk'],
-                            'comment_text': c['text'],
-                            'post_id': post.id,
-                            'date': datetime.fromtimestamp(c['created_at'])
-                          }
+                            query = "select id from sna_instagram_post_comment where comment_id = '" + str(c['pk']) + "' and post_id = " + str(post_id) + " limit 1"
+                            self.env.cr.execute(query)
+                            commentExists = self.env.cr.fetchall()
 
-                          comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
-                          comment_ids.append(comment.id)
+                            if not commentExists:
+                                comment_data = {
+                                  'comment_id': c['pk'],
+                                  'comment_text': c['text'],
+                                  'post_id': post_id,
+                                  'date': datetime.fromtimestamp(c['created_at'])
+                                }
+
+                                comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
+                                comment_ids.append(comment.id)
 
                         if i['media_type'] == 1 or i['media_type'] == 2:
                             images = [i['image_versions2']['candidates'][0]['url']]
@@ -83,12 +99,17 @@ class InstagramConfig(models.Model):
                             images = [j['image_versions2']['candidates'][0]['url'] for j in i['carousel_media']]
 
                         for img in images:
-                            img_data = {
-                              'media_id': i['pk'],
-                              'url': img,
-                              'post_id': post.id
-                            }
-                            self.sudo().env['sna.instagram.post.media'].create(img_data)
+                            query = "select id from sna_instagram_post_media where url = '" + img + "' and post_id = " + str(post_id) + " limit 1"
+                            self.env.cr.execute(query)
+                            mediaExists = self.env.cr.fetchall()
+
+                            if not mediaExists:
+                                img_data = {
+                                  'media_id': i['pk'],
+                                  'url': img,
+                                  'post_id': post_id
+                                }
+                                self.sudo().env['sna.instagram.post.media'].create(img_data)
 
                 next_max_id = results.get('next_max_id')
                 if next_max_id:
@@ -107,6 +128,15 @@ class InstagramConfig(models.Model):
                     'message' : e
                   }
             return {'warning': mess}
+
+    @api.model
+    def _start_getting_posts_all(self):
+      configs = self.env['sna.instagram.config'].search([])
+
+      for config in configs:
+        self._start_getting_posts({'sna_instagram_username': config['sna_instagram_username'],
+                                   'sna_instagram_password': config['sna_instagram_password'],
+                                   'config_id': config['id']})
 
     @api.model
     def create(self, values):
@@ -129,4 +159,3 @@ class SnaInstagramConfigContextAcount(models.Model):
   context_description = fields.Char()
   context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')])
   account_namelines_id = fields.Many2one('sna.instagram.config', 'Account name', ondelete='cascade', required=True)
-
