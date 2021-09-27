@@ -93,18 +93,23 @@ class InstagramConfig(models.Model):
                                 comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
                                 comment_ids.append(comment.id)
 
-                                if i['media_type'] == 1 or i['media_type'] == 2:
-                                    images = [i['image_versions2']['candidates'][0]['url']]
-                                elif i['media_type'] == 8:
-                                    images = [j['image_versions2']['candidates'][0]['url'] for j in i['carousel_media']]
+                        if i['media_type'] == 1 or i['media_type'] == 2:
+                            images = [i['image_versions2']['candidates'][0]['url']]
+                        elif i['media_type'] == 8:
+                            images = [j['image_versions2']['candidates'][0]['url'] for j in i['carousel_media']]
 
-                                for img in images:
-                                    img_data = {
-                                      'media_id': i['pk'],
-                                      'url': img,
-                                      'post_id': post_id
-                                    }
-                                    self.sudo().env['sna.instagram.post.media'].create(img_data)
+                        for img in images:
+                            query = "select id from sna_instagram_post_media where url = '" + img + "' and post_id = " + str(post_id) + " limit 1"
+                            self.env.cr.execute(query)
+                            mediaExists = self.env.cr.fetchall()
+
+                            if not mediaExists:
+                                img_data = {
+                                  'media_id': i['pk'],
+                                  'url': img,
+                                  'post_id': post_id
+                                }
+                                self.sudo().env['sna.instagram.post.media'].create(img_data)
 
                 next_max_id = results.get('next_max_id')
                 if next_max_id:
