@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="sna_instagram_post_comment_list">
+      <field name="name">sna_instagram_post_comment list</field>
+      <field name="model">sna.instagram.post.comment</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="context_sentiment=='1'" decoration-danger="context_sentiment=='2'" decoration-warning="context_sentiment=='3'">
+          <field name="partner_id"/>
+          <field name="post_id_"/>
+          <field name="context_description"/>
+          <field name="context_sentiment"/>
+          <field name="comment_text"/>
+          <field name="date"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="sna_instagram_post_comment_form_view">
+      <field name="name">sna_instagram_post_comment form</field>
+      <field name="model">sna.instagram.post.comment</field>
+      <field name="arch" type="xml">
+        <form string="Comment Analytics">
+          <sheet>
+            <group>
+              <group col="2" colspan="2">
+                <field name="config_id" invisible="1"/>
+                <field name="context_id"  domain="[('account_namelines_id', '=', config_id)]"/>
+                <field name="context_sentiment" string = ""/>
+              </group>
+
+              <group col="2" colspan="2">
+                <field name="comment_text" readonly="1"/>
+              </group>
+
+              <group col="4" colspan="2">
+                <field name="partner_id" readonly="1"/>
+                <field name="date" readonly="1"/>
+                <field name="post_post_id" readonly="1"/>
+                <field name="comment_id" readonly="1"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="sna_instagram_post_comment_view_filter">
+	    <field name="name">sna.instagram.post.comment.filter</field>
+	    <field name="model">sna.instagram.post.comment</field>
+	    <field name="arch" type="xml">
+	        <search string="Search Instagram Post">
+<!--            <group expand="0" string="Group By">-->
+<!--              <filter string="Partner" name="partner_id" context="{'group_by':'partner_id'}"/>-->
+<!--            </group>-->
+	        </search>
+	    </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="sna_instagram_comment_analytics_action">
+      <field name="name"> Comment Analytics</field>
+      <field name="res_model">sna.instagram.post.comment</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="search_view_id" ref="sna_instagram_post_comment_view_filter"/>
+    </record>
+
+    <menuitem name="Comment Analytics" id="menu_sna_instagram_comment_analytics" parent="menu_instagram" action="sna_instagram_comment_analytics_action"/>
+  </data>
+</odoo>

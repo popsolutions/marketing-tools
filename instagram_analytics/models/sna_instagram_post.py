@@ -5,6 +5,7 @@ from odoo import models, fields, api
 
 class InstagramPost(models.Model):
     _name = 'sna.instagram.post'
+    _description = 'Instagram Post'
 
     post_id = fields.Char("Instagram Post ID")
     config_id = fields.Many2one('sna.instagram.config')
@@ -46,7 +47,14 @@ class InstagramPostHashtag(models.Model):
 class InstagramPostComment(models.Model):
     _name = 'sna.instagram.post.comment'
 
-    comment_id = fields.Char()
+    comment_id = fields.Char("Comment Id")
     comment_text = fields.Text()
-    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade')
+    post_id = fields.Many2one('sna.instagram.post', ondelete='cascade', string='Post id')
+    post_id_ = fields.Integer(string='Id Post', related='post_id.id', readonly=True, store=True)
+    post_post_id = fields.Char(string='Post id Instagram', related='post_id.post_id', readonly=True, store=True)
+    partner_id = fields.Many2one('res.partner', related='post_id.partner_id', readonly=True, store=True)
+    config_id = fields.Many2one('sna.instagram.config', related='post_id.config_id', readonly=True, store=True)
+    context_id = fields.Many2one('sna.instagram.context.acount', string = 'Context')
+    context_description = fields.Char(related='context_id.context_description', readonly=True)
+    context_sentiment = fields.Selection(related='context_id.context_sentiment', readonly=True, store = True)
     date = fields.Datetime()
