@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, tools, SUPERUSER_ID, _
+from odoo.exceptions import ValidationError
 
 MISSION_PRODUCT = {
     'quizz': 'ps_missions.product_mission_quizz',
@@ -179,6 +180,21 @@ class PopsEstablishment(models.Model):
     latitude = fields.Char('Latitude')
     longitude = fields.Char('Longitude')
 
+    @api.constrains('latitude')
+    def _check_latitude(self):
+        for lat in self:
+            if ',' in lat.latitude:
+                raise ValidationError(_("Use dot (.) instead of comma for decimals"))
+            if not -90 < float(lat.latitude) < 90:
+                raise ValidationError(_("Insert a valid number for latitude (between -90 and 90)"))
+
+    @api.constrains('longitude')
+    def _check_longitude(self):
+        for lon in self:
+            if ',' in lon.longitude:
+                raise ValidationError(_("Use dot (.) instead of comma for decimals"))
+            if not -180 < float(lon.longitude) < 180:
+                raise ValidationError(_("Insert a valid number for longitude (between -180 and 180)"))
 
 class PopsEstablishmentType(models.Model):
     _name = 'pops.establishment.type'
