@@ -112,8 +112,8 @@
       <field name="code">action = model._start_getting_posts_all()</field>
     </record>
 
-    <menuitem name="Get Posts" id="menu_get_posts" parent="social_network_analytics_base.menu_root" action="start_getting_posts_all"/>
-    <menuitem name="Instagram" id="menu_instagram" parent="social_network_analytics_base.menu_root"/>
+    <menuitem name="Get Posts" id="menu_get_posts" parent="social_network_analytics_base.menu_root" action="start_getting_posts_all" sequence="20"/>
+    <menuitem name="Instagram" id="menu_instagram" parent="social_network_analytics_base.menu_root" sequence="10"/>
       <menuitem name="Posts" id="menu_sna_instagram_posts" parent="menu_instagram"
               action="sna_instagram_post_action"/>
   </data>

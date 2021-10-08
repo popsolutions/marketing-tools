@@ -156,6 +156,12 @@ class InstagramConfig(models.Model):
 class SnaInstagramConfigContextAcount(models.Model):
   _name = 'sna.instagram.context.acount'
 
-  context_description = fields.Char()
-  context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')])
+  context_description = fields.Char('Context Description')
+  context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')], string = 'Context Sentiment')
   account_namelines_id = fields.Many2one('sna.instagram.config', 'Account name', ondelete='cascade', required=True)
+  def name_get (self):
+    result = []
+
+    for record in self:
+      result.append((record.id, record.context_description))
+    return result

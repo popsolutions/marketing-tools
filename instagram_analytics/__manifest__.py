@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'views/sna_instagram_post_views.xml',
         'views/sna_instagram_config_views.xml',
-        'data/ir_cron_sna_instagram_config.xml'
+        'data/ir_cron_sna_instagram_config.xml',
+        'views/sna_instagram_comment_analytics.xml'
     ],
 }
