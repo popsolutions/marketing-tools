@@ -43,11 +43,9 @@
                     <field name="context_acount_ids" readonly="False">
                         <form string="Hitos">
                             <field name="context_description"/>
-                            <field name="context_sentiment"/>
                         </form>
                         <tree string="Hitos" editable="bottom">
                             <field name="context_description"/>
-                            <field name="context_sentiment"/>
                         </tree>
                     </field>
                 </page>
