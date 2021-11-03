@@ -46,6 +46,7 @@ class InstagramPostHashtag(models.Model):
 
 class InstagramPostComment(models.Model):
     _name = 'sna.instagram.post.comment'
+    _description = 'Post Comments'
 
     comment_id = fields.Char("Comment Id")
     comment_text = fields.Text()
@@ -56,5 +57,5 @@ class InstagramPostComment(models.Model):
     config_id = fields.Many2one('sna.instagram.config', related='post_id.config_id', readonly=True, store=True)
     context_id = fields.Many2one('sna.instagram.context.acount', string = 'Context')
     context_description = fields.Char(related='context_id.context_description', readonly=True)
-    context_sentiment = fields.Selection(related='context_id.context_sentiment', readonly=True, store = True)
+    context_sentiment = fields.Selection([('1', 'Positivo'), ('2', 'Negativo'), ('3', 'Neutro')], string='Context Sentiment')
     date = fields.Datetime()
