@@ -26,8 +26,9 @@ class InstagramPost(models.Model):
 
     def _get_img_html(self):
         for elem in self:
-            img_url = self.media_ids[0].url
-            elem.img_attach = '<img src="%s"/>' % img_url
+            if len(self.media_ids) > 0:
+                img_url = self.media_ids[0].url
+                elem.img_attach = '<img src="%s"/>' % img_url
 
 class InstagramPostMedia(models.Model):
     _name = 'sna.instagram.post.media'
