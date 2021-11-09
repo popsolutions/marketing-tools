@@ -9,6 +9,8 @@
           <field name="partner_id"/>
           <field name="sna_account_name"/>
           <field name="sna_instagram_username"/>
+          <field name="active"/>
+          <field name="login_account"/>
         </tree>
       </field>
     </record>
@@ -35,6 +37,12 @@
                 <div>
                   <label for="sna_instagram_password"/>
                   <field name="sna_instagram_password" password="True"/>
+                </div>
+                <div>
+                  <label for="active"/>
+                  <field name="active"/>
+                  <label for="login_account"/>
+                  <field name="login_account"/>
                 </div>
               </div>
             </group>

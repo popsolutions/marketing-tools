@@ -5,6 +5,7 @@ from odoo import models, fields, api
 from datetime import datetime
 from instagram_private_api import Client, ClientCompatPatch
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
+from igramscraper.instagram import Instagram
 
 class InstagramConfig(models.Model):
     _name = 'sna.instagram.config'
@@ -16,9 +17,11 @@ class InstagramConfig(models.Model):
     sna_instagram_password = fields.Char()
     context_acount_ids = fields.One2many('sna.instagram.context.acount', 'account_namelines_id', 'Account Context',
                                       readonly=True, copy=True)
+    active = fields.Boolean('Active')
+    login_account = fields.Boolean('Login Account')
 
     @api.multi
-    def _start_getting_posts(self, values):
+    def start_getting_posts_privateapi(self, values):
         sna_instagram_username = values['sna_instagram_username']
         sna_instagram_password = values['sna_instagram_password']
 
@@ -74,43 +77,36 @@ class InstagramConfig(models.Model):
                           post = self.sudo().env['sna.instagram.post'].create(post_data)
                           post_id = post.id
 
+                          #Salvando a imagem do Post
+                          if i['media_type'] == 1 or i['media_type'] == 2:
+                              images = [i['image_versions2']['candidates'][0]['url']]
+                          elif i['media_type'] == 8:
+                              images = [j['image_versions2']['candidates'][0]['url'] for j in i['carousel_media']]
+
+                          for img in images:
+                              query = "select id from sna_instagram_post_media where url = '" + img + "' and post_id = " + str(post_id) + " limit 1"
+                              self.env.cr.execute(query)
+                              mediaExists = self.env.cr.fetchall()
+
+                              if not mediaExists:
+                                  img_data = {
+                                    'media_id': i['pk'],
+                                    'url': img,
+                                    'post_id': post_id
+                                  }
+                                  self.sudo().env['sna.instagram.post.media'].create(img_data)
+
                         comments = api.media_n_comments(i['id'], n=i['comment_count'])
 
-                        comment_ids = []
-
                         for c in comments:
-                            query = "select id from sna_instagram_post_comment where comment_id = '" + str(c['pk']) + "' and post_id = " + str(post_id) + " limit 1"
-                            self.env.cr.execute(query)
-                            commentExists = self.env.cr.fetchall()
+                          comment_data = {
+                            'comment_id': c['pk'],
+                            'comment_text': c['text'],
+                            'post_id': post_id,
+                            'date': datetime.fromtimestamp(c['created_at'])
+                          }
 
-                            if not commentExists:
-                                comment_data = {
-                                  'comment_id': c['pk'],
-                                  'comment_text': c['text'],
-                                  'post_id': post_id,
-                                  'date': datetime.fromtimestamp(c['created_at'])
-                                }
-
-                                comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
-                                comment_ids.append(comment.id)
-
-                        if i['media_type'] == 1 or i['media_type'] == 2:
-                            images = [i['image_versions2']['candidates'][0]['url']]
-                        elif i['media_type'] == 8:
-                            images = [j['image_versions2']['candidates'][0]['url'] for j in i['carousel_media']]
-
-                        for img in images:
-                            query = "select id from sna_instagram_post_media where url = '" + img + "' and post_id = " + str(post_id) + " limit 1"
-                            self.env.cr.execute(query)
-                            mediaExists = self.env.cr.fetchall()
-
-                            if not mediaExists:
-                                img_data = {
-                                  'media_id': i['pk'],
-                                  'url': img,
-                                  'post_id': post_id
-                                }
-                                self.sudo().env['sna.instagram.post.media'].create(img_data)
+                          comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
 
                 next_max_id = results.get('next_max_id')
                 if next_max_id:
@@ -130,20 +126,115 @@ class InstagramConfig(models.Model):
                   }
             return {'warning': mess}
 
+    @api.multi
+    def start_getting_posts_instagramscrapy(self, values):
+      sna_instagram_username = values['sna_instagram_username']
+      config_id = values['config_id']
+
+      try:
+
+        instagram = Instagram()
+        # instagram.with_credentials('MateusONunes', 'nunes54%$', 'path/to/cache/folder2')
+        instagram.with_credentials('popsolutions.co', '1ND1C0p4c1f1c0', 'path/to/cache/folder2')
+        instagram.login()
+
+        # medias = instagram.get_medias("mateusonunes", 25)
+        medias = instagram.get_medias(sna_instagram_username, 10)
+        i = 0
+        for media in medias:
+          i += 1
+          # print(media)
+          account = media.owner
+          # print(account)
+          post_data = {
+            'post_id': media.identifier,
+            'config_id': config_id,
+            'date': datetime.fromtimestamp(media.created_time),
+            'caption': media.caption,
+            'like_count': media.likes_count,
+            'comment_count': str(media.comments_count),
+            'hashtag_ids': '???',
+            'location': None,
+            'latitude': None,
+            'longitude': None
+          }
+
+          query = "select id from sna_instagram_post where post_id = '" + str(media.identifier) + "'"
+          self.env.cr.execute(query)
+          postExists = self.env.cr.fetchall()
+
+          if not postExists:
+            post = self.sudo().env['sna.instagram.post'].create(post_data)
+            post_id = post.id
+
+            images = [media.square_images[0]]
+
+            for img in images:
+              img_data = {
+                'media_id': media.identifier,
+                'url': img,
+                'post_id': post_id
+              }
+              self.sudo().env['sna.instagram.post.media'].create(img_data)
+
+          else:
+            post_data['id'] = postExists[0][0]
+            # post = self.sudo().env['sna.instagram.post'].write(post_data)
+            post_id = post_data['id']
+
+          comments = instagram.get_media_comments_by_id(media.identifier, 50)
+
+          for comment in comments['comments']:
+            # print(comment.owner.username + ': ' + comment.text)
+            query = "select id from sna_instagram_post_comment where comment_text = '" + comment.text + "' and post_id = " + str(post_id) + " limit 1"
+            self.env.cr.execute(query)
+            commentExists = self.env.cr.fetchall()
+
+            if not commentExists:
+                comment_data = {
+                  'comment_id': comment.identifier,
+                  'comment_text': comment.text,
+                  'post_id': post_id,
+                  'date': datetime.fromtimestamp(float(comment.created_at))
+                }
+
+                comment = self.sudo().env['sna.instagram.post.comment'].create(comment_data)
+
+      except Exception as e:
+          print(e)
+          print('\n\n')
+          if e == 'bad_password':
+            e = 'Senha incorreta!'
+          mess= {
+                  'title': ('Erro'),
+                  'message' : e
+                }
+          return {'warning': mess}
+
+    @api.model
+    def _start_getting_posts(self, values):
+        if (not values['sna_instagram_password']):
+          self.start_getting_posts_instagramscrapy({'sna_instagram_username': values['sna_instagram_username'],
+                                                    'config_id': values['id']})
+        else:
+          # print('x')
+          self.start_getting_posts_privateapi({'sna_instagram_username': values['sna_instagram_username'],
+                                               'sna_instagram_password': values['sna_instagram_password'],
+                                               'config_id': values['id']})
+
     @api.model
     def _start_getting_posts_all(self):
-      configs = self.env['sna.instagram.config'].search([])
-
+      configs = self.env['sna.instagram.config'].search([('active', '=', True)])
       for config in configs:
-        self._start_getting_posts({'sna_instagram_username': config['sna_instagram_username'],
-                                   'sna_instagram_password': config['sna_instagram_password'],
-                                   'config_id': config['id']})
+        self._start_getting_posts(config)
 
     @api.model
     def create(self, values):
         record = super(InstagramConfig, self).create(values)
         print('create\n\n')
-        self._start_getting_posts(values)
+
+        if values['active']:
+          self._start_getting_posts(record)
         return record
 
     # def _run_inbg(self, cr, uid):
