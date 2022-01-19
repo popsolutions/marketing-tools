@@ -144,7 +144,6 @@ class InstagramConfig(models.Model):
         instagram.with_credentials(userLogin_userName, userLogin_password, 'path/to/cache/folder2')
         instagram.login()
 
-        # medias = instagram.get_medias("mateusonunes", 25)
         medias = instagram.get_medias(sna_instagram_username, 20)
         i = 0
         for media in medias:
