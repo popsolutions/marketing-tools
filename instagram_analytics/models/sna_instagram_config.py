@@ -116,15 +116,11 @@ class InstagramConfig(models.Model):
                     more =False
 
         except Exception as e:
-            print(e)
-            print('\n\n')
-            if e == 'bad_password':
-              e = 'Senha incorreta!'
-            mess= {
-                    'title': ('Erro'),
-                    'message' : e
-                  }
-            return {'warning': mess}
+          print(e)
+          print('\n\n')
+          if e == 'bad_password' or e == 'User credentials are wrong., Code:401':
+            e = 'Senha incorreta!'
+          raise UserError(e)
 
     @api.multi
     def start_getting_posts_instagramscrapy(self, values):
@@ -135,11 +131,21 @@ class InstagramConfig(models.Model):
 
         instagram = Instagram()
         # instagram.with_credentials('MateusONunes', 'nunes54%$', 'path/to/cache/folder2')
-        instagram.with_credentials('popsolutions.co', '1ND1C0p4c1f1c0', 'path/to/cache/folder2')
+
+        query = "select sic.sna_instagram_username, sic.sna_instagram_password from sna_instagram_config " \
+                "sic where sic.active = true and sic.login_account = true" \
+                " order by id limit 1"
+        self.env.cr.execute(query)
+        userInstagranLoginAccount = self.env.cr.fetchall()
+        userLogin_userName = userInstagranLoginAccount[0][0];
+        userLogin_password = userInstagranLoginAccount[0][1];
+        userLogin_password = 'x';
+
+        instagram.with_credentials(userLogin_userName, userLogin_password, 'path/to/cache/folder2')
         instagram.login()
 
         # medias = instagram.get_medias("mateusonunes", 25)
-        medias = instagram.get_medias(sna_instagram_username, 10)
+        medias = instagram.get_medias(sna_instagram_username, 20)
         i = 0
         for media in medias:
           i += 1
@@ -153,7 +159,7 @@ class InstagramConfig(models.Model):
             'caption': media.caption,
             'like_count': media.likes_count,
             'comment_count': str(media.comments_count),
-            'hashtag_ids': '???',
+            'hashtag_ids': '',
             'location': None,
             'latitude': None,
             'longitude': None
@@ -203,13 +209,15 @@ class InstagramConfig(models.Model):
       except Exception as e:
           print(e)
           print('\n\n')
-          if e == 'bad_password':
+          if e.args[0] == 'bad_password' or e.args[0] == 'User credentials are wrong., Code:401':
             e = 'Senha incorreta!'
-          mess= {
-                  'title': ('Erro'),
-                  'message' : e
-                }
-          return {'warning': mess}
+          raise UserError(e)
+
+    @api.multi
+    def action_getposts(self, values):
+      self._start_getting_posts({'sna_instagram_username':self.sna_instagram_username,
+                                 'sna_instagram_password': self.sna_instagram_password,
+                                 'id':self.id})
 
     @api.model
     def _start_getting_posts(self, values):
@@ -217,7 +225,6 @@ class InstagramConfig(models.Model):
           self.start_getting_posts_instagramscrapy({'sna_instagram_username': values['sna_instagram_username'],
                                                     'config_id': values['id']})
         else:
-          # print('x')
           self.start_getting_posts_privateapi({'sna_instagram_username': values['sna_instagram_username'],
                                                'sna_instagram_password': values['sna_instagram_password'],
                                                'config_id': values['id']})

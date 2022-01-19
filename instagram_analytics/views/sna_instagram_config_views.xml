@@ -20,6 +20,9 @@
       <field name="model">sna.instagram.config</field>
       <field name="arch" type="xml">
         <form string="Instagram configuration">
+          <header>
+            <button name="action_getposts" type="object" string="Get Posts" class="oe_highlight"/>
+          </header>
           <sheet>
             <group string="Instagram" col="1">
               <div>
