@@ -38,8 +38,9 @@
         <form>
           <sheet>
             <group>
-              <group>
+              <group col="4" colspan="2">
                 <field name="img_attach"/>
+                <field name="like_count"/>
               </group>
               <group col="4" colspan="2">
                 <field name="post_id"/>
