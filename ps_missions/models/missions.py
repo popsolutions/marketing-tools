@@ -183,18 +183,30 @@ class PopsEstablishment(models.Model):
     @api.constrains('latitude')
     def _check_latitude(self):
         for lat in self:
-            if not lat.latitude.isdecimal():
-                raise ValidationError(_("Insert only numbers for latitude. Use dot (.) instead of comma for decimals"))
-            if not -90 < float(lat.latitude) < 90:
-                raise ValidationError(_("Insert a valid number for latitude (between -90 and 90)"))
+            if ',' in lat.latitude:
+                raise ValidationError("Use dot (.) instead of comma for decimals")
+
+            try:
+                float(lat.latitude)
+            except Exception as e:
+                raise ValidationError("Insert a valid number for latitude\n" + str(e))
+                
+            if not -90 <= float(lat.latitude) <= 90:
+                raise ValidationError("Insert a valid number for latitude (between -90 and 90)")
 
     @api.constrains('longitude')
     def _check_longitude(self):
         for lon in self:
-            if not lon.longitude.isdecimal():
-                raise ValidationError(_("Insert only numbers for longitude. Use dot (.) instead of comma for decimals"))
-            if not -180 < float(lon.longitude) < 180:
-                raise ValidationError(_("Insert a valid number for longitude (between -180 and 180)"))
+            if ',' in lon.longitude:
+                raise ValidationError("Use dot (.) instead of comma for decimals")
+
+            try:
+                float(lon.longitude)
+            except Exception as e:
+                raise ValidationError("Insert a valid number for latitude\n" + str(e))
+                
+            if not -180 <= float(lon.longitude) <= 180:
+                raise ValidationError("Insert a valid number for latitude (between -180 and 180)")
 
 class PopsEstablishmentType(models.Model):
     _name = 'pops.establishment.type'
